@@ -5,11 +5,7 @@ import Filter from '@/components/Home/Filter';
 import Title from '@/components/UI/Title';
 import NoResult from '@/components/UI/NoResult';
 import ProductList from '@/components/ProductList';
-import TextSeo from '@/components/UI/TextSeo';
-import TopBrands from '@/components/Home/TopBrands';
-import PopularSizes from '@/components/Home/PopularSizes';
-import Reviews from '@/components/Home/Reviews';
-import PopularCarBrands from '@/components/Home/PopularCarBrands';
+import Support from '@/components/Home/Support';
 
 async function getSettings() {
 	const res = await fetch(`${ process.env.SERVER_URL }/baseData/settings`, {
@@ -33,16 +29,6 @@ async function getProducts() {
 	return await res.json();
 }
 
-async function getFeatureParams() {
-	const res = await fetch(`${ process.env.SERVER_URL }/api/getFeatureParams`, {
-		method: 'GET',
-		headers: {
-			'Access-Control-Allow-Credentials': 'true',
-		}
-	});
-	return await res.json();
-}
-
 export async function generateMetadata({ params }: { params: Promise<{ locale: Language }> }): Promise<Metadata> {
 	const { locale } = await params;
 	const lang = locale === Language.UK ? LanguageCode.UA : Language.RU;
@@ -60,25 +46,20 @@ export default async function Home({ params }: { params: Promise<{ locale: Langu
 	const lang = locale === Language.UK ? LanguageCode.UA : Language.RU;
 	const response = await getSettings();
 	const products = await getProducts();
-	const featureParams = await getFeatureParams();
 
 	return (
 		<>
 			<Filter />
 			<LayoutWrapper>
-				<div className='max-w-7xl mx-auto'>
+				<div className='max-w-6xl mx-auto'>
 					<Title title={ response[lang].h2_top } className='mt-12 mb-5 text-2xl md:text-4xl font-bold px-3 md:px-0' />
 					{ products.result ? <ProductList
 						classnames='grid-cols-1 md:grid-cols-2 lg:grid-cols-4'
 						data={ products.data }
 					/> : <NoResult noResultText='no result'/> }
-					<Title title='popular brands' translations={ true } className='mt-24 mb-5 text-2xl md:text-4xl font-bold px-3 md:px-0' />
-					<TopBrands />
 				</div>
-				{ featureParams.ProductTiporazmer && <PopularSizes locale={ locale } settings={ response } popularSizes={ featureParams.ProductTiporazmer } /> }
-				{ featureParams.Car2Brand && <PopularCarBrands locale={ locale } settings={ response } popularCarBrands={ featureParams.Car2Brand } /> }
-				<TextSeo description={ response[lang].description }/>
 			</LayoutWrapper>
+			<Support />
 		</>
 	);
 };

@@ -24,6 +24,11 @@ const PhoneMaskInput = ({ phoneErrorMessage }: { phoneErrorMessage: null | strin
 			customInput={ Input }
 			aria-label="input-monto"
 			name='phone'
+			variant='underlined'
+			classNames={{
+				label: 'text-white',
+				inputWrapper: 'after:bg-white shadow-white group-data-[focus=true]:after:bg-white'
+			}}
 		/>
 	)
 };
