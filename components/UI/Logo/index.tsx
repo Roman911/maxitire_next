@@ -18,7 +18,7 @@ const Logo: FC<Props> = ({ isFooter }) => {
 	}
 
 	return (
-		<Link href='/' onClick={ handleClick } className='logo'>
+		<Link href='/' onClick={ handleClick } className='logo w-32 md:w-auto'>
 			{ isFooter ? <Image
 				src='/logo-footer.png'
 				alt="logo"

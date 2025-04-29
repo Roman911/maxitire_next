@@ -40,24 +40,22 @@ const HeaderMain: FC<Props> = ({ settings }) => {
 	return (
 		<Navbar
 			maxWidth='2xl'
-			height='h-32'
+			// height='h-32 md:h-60'
 			isMenuOpen={ isMenuOpen }
 			onMenuOpenChange={ setIsMenuOpen }
 			className={ twMerge('bg-white relative border-b border-gray-300', styles['header-center']) }
-			classNames={ { wrapper: twMerge('container max-w-6xl mx-auto grid items-center justify-normal px-4 grid-cols-2 lg:grid-cols-[168px_auto_220px_120px]', styles['container']) } }
+			classNames={ { wrapper: twMerge('container max-w-6xl mx-auto grid items-center justify-normal px-4 grid-cols-2 h-40 gap-2 md:h-32 lg:grid-cols-[168px_auto_320px]', styles['container']) } }
 		>
 			<NavbarContent className={ styles.logo }>
 				<NavbarBrand>
 					<Logo />
 				</NavbarBrand>
 			</NavbarContent>
-			<NavbarContent className={ styles.search }>
+			<NavbarContent className={ twMerge(styles.search, 'pb-4') }>
 				<Search />
 			</NavbarContent>
-			<NavbarContent className='hidden md:flex'>
-				<Contacts isTopLine={ false } settings={ settings } />
-			</NavbarContent>
 			<NavbarContent justify='end'>
+				<Contacts settings={ settings } />
 				<ButtonBlock />
 				<NavbarMenuToggle className="sm:hidden" aria-label={ isMenuOpen ? "Close menu" : "Open menu" }/>
 			</NavbarContent>
