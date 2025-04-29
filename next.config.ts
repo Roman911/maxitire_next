@@ -21,8 +21,8 @@ const nextConfig: NextConfig = {
 				pathname: '/public/img/user/**',
 			},
 			{
-				protocol: 'https',
-				hostname: 'admin.firststop.com.ua',
+				protocol: 'http',
+				hostname: 'admin.maxitire.com.ua',
 				pathname: '**',
 			},
 		],

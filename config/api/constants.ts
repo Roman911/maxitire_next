@@ -1,5 +1,5 @@
 export const API_CONSTANTS = {
-	BASE_URL: process.env.NEXT_PUBLIC_API_URL || '',
+	BASE_URL: process.env.NEXT_PUBLIC_API_URL,
 	ENDPOINTS: {
 		BASE_DATA: '/baseData',
 		API: '/api',

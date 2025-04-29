@@ -26,7 +26,8 @@ const PhoneMaskInput = ({ phoneErrorMessage }: { phoneErrorMessage: null | strin
 			name='phone'
 			variant='underlined'
 			classNames={{
-				label: 'text-white',
+				label: 'text-white text-base',
+				input: 'group-data-[has-value=true]:text-white text-lg',
 				inputWrapper: 'after:bg-white shadow-white group-data-[focus=true]:after:bg-white'
 			}}
 		/>

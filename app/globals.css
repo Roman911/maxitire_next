@@ -10,7 +10,7 @@
 
 :root {
   --background: var(--color-gray-50);
-  --foreground: #ffffff;
+  --foreground: #000000;
   --radius-small: 4px;
 }
 

@@ -1,17 +1,18 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import {
 	API_CONSTANTS,
-	DEFAULT_HEADERS,
+	// DEFAULT_HEADERS,
 	FORM_HEADERS,
 	baseEndpoints,
 	productEndpoints,
-	deliveryEndpoints,
+	// deliveryEndpoints,
 	orderEndpoints,
 	formEndpoints
 } from '@/config/api';
 import { SettingsProps } from '@/models/settings';
 import { ProductsProps } from '@/models/products';
-import { BaseDataProps } from '@/models/baseData';
+import { BaseDataProps, KitDiskSize, KitTyreSize, ManufModels } from '@/models/baseData';
+import { OrdersParamProps } from '@/models/ordersParam';
 
 export const baseDataAPI = createApi({
 	reducerPath: 'baseDataAPI',
@@ -41,6 +42,42 @@ export const baseDataAPI = createApi({
 				method: API_CONSTANTS.METHODS.POST,
 				body: data,
 				headers: FORM_HEADERS
+			}),
+		}),
+		createCallback: build.mutation({
+			query: (data) => ({
+				url: formEndpoints.callback,
+				method: API_CONSTANTS.METHODS.POST,
+				body: data,
+				headers: FORM_HEADERS
+			}),
+		}),
+		createAddAsk: build.mutation({
+			query: (data) => ({
+				url: formEndpoints.ask,
+				method: API_CONSTANTS.METHODS.POST,
+				body: data,
+				headers: FORM_HEADERS
+			}),
+		}),
+		fetchKitTyreSize: build.query<KitTyreSize[], string>({
+			query: (id) => ({
+				url: baseEndpoints.kitTyreSize(id),
+			}),
+		}),
+		fetchKitDiskSize: build.query<KitDiskSize[], string>({
+			query: ([section]) => ({
+				url: baseEndpoints.kitDiskSize(section),
+			}),
+		}),
+		fetchManufModels: build.query<ManufModels[], string>({
+			query: ([section]) => ({
+				url: baseEndpoints.manufModels(section),
+			}),
+		}),
+		fetchOrdersParam: build.query<OrdersParamProps, string>({
+			query: () => ({
+				url: orderEndpoints.params,
 			}),
 		}),
 	}),

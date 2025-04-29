@@ -8,7 +8,7 @@ import ProductList from '@/components/ProductList';
 import Support from '@/components/Home/Support';
 
 async function getSettings() {
-	const res = await fetch(`${ process.env.SERVER_URL }/baseData/settings`, {
+	const res = await fetch(`${ process.env.NEXT_PUBLIC_API_URL }/baseData/settings`, {
 		method: 'GET',
 		headers: {
 			'Access-Control-Allow-Credentials': 'true',
@@ -18,7 +18,7 @@ async function getSettings() {
 }
 
 async function getProducts() {
-	const res = await fetch(`${ process.env.SERVER_URL }/api/getProducts?typeproduct=1`, {
+	const res = await fetch(`${ process.env.NEXT_PUBLIC_API_URL }/api/getProducts?typeproduct=1`, {
 		method: 'POST',
 		headers: {
 			'Access-Control-Allow-Credentials': 'true',
@@ -32,7 +32,7 @@ async function getProducts() {
 export async function generateMetadata({ params }: { params: Promise<{ locale: Language }> }): Promise<Metadata> {
 	const { locale } = await params;
 	const lang = locale === Language.UK ? LanguageCode.UA : Language.RU;
-	const response = await fetch(`${ process.env.SERVER_URL }/baseData/settings`)
+	const response = await fetch(`${ process.env.NEXT_PUBLIC_API_URL }/baseData/settings`)
 		.then((res) => res.json());
 
 	return {
