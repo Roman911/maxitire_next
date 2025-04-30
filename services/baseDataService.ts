@@ -125,5 +125,15 @@ export const baseDataAPI = createApi({
 				url: baseEndpoints.autoBrandModelKit(id),
 			}),
 		}),
+		fetchDlSearch: build.query({
+			query: (name) => ({
+				url: deliveryEndpoints.delivery.cities(name),
+			}),
+		}),
+		fetchDlWarehouses: build.query({
+			query: (ref) => ({
+				url: deliveryEndpoints.delivery.warehouses(ref),
+			}),
+		}),
 	}),
 });
