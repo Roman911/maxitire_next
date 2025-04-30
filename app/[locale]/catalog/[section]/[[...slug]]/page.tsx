@@ -5,10 +5,7 @@ import { Section } from '@/models/filter';
 import { BaseDataProps } from '@/models/baseData';
 import ProductList from '@/components/ProductList';
 import NoResult from '@/components/UI/NoResult';
-import FilterByCar from '@/components/Catalog/FilterByCar';
 import { transformUrl } from './transformUrl';
-import SelectionByCar from '@/components/Catalog/SelectionByCar';
-import FilterActive from '@/components/Catalog/FilterActive';
 import HeaderCatalog from '@/components/Catalog/HeaderCatalog';
 import Pagination from '@/components/Catalog/Pagination';
 import type { Metadata } from 'next';
@@ -72,9 +69,6 @@ export default async function Catalog({ params }: { params: Promise<{ locale: La
 			<div className='py-5 lg:flex lg:gap-10'>
 				<FilterAlt filterData={ filterData } section={ section } locale={ locale } slug={ slug } />
 				<div className='flex-1'>
-					{/*<FilterByCar />*/}
-					{/*<SelectionByCar />*/}
-					{/*<FilterActive locale={ locale } className='hidden lg:flex' slug={ slug } />*/}
 					{ products.result ? <ProductList
 						classnames='grid-cols-1 lg:grid-cols-2 lg:grid-cols-3'
 						data={ products.data }

@@ -1,6 +1,5 @@
 'use client'
 import { Dispatch, FC, SetStateAction } from 'react';
-import { usePathname } from 'next/navigation';
 import { LinkProps } from 'next/link';
 import { useTranslations } from 'next-intl';
 import { twMerge } from 'tailwind-merge';
@@ -28,7 +27,6 @@ interface ILinkComponent extends LinkProps {
 	label: string
 	section: 'header' | 'catalog'
 	icon: keyof typeof Icons
-	vehicleType: string[]
 }
 
 const LinkComponent: FC<ILinkComponent> = (
@@ -37,11 +35,7 @@ const LinkComponent: FC<ILinkComponent> = (
 		href,
 		icon,
 		label,
-		vehicleType
 	}) => {
-	const pathname = usePathname();
-	const value = pathname.split("vt-")[1]?.split("/")[0] || null;
-	const active = value && vehicleType.includes(value);
 	const IconComponent = Icons[icon];
 	const dispatch = useAppDispatch();
 
@@ -90,7 +84,6 @@ const TypeCarLinks: FC<TypeCarLinksProps> = ({ setOpen, section }) => {
 				icon={ item.icon as keyof typeof Icons }
 				label={ t(item.label) }
 				onClick={ handleClick }
-				vehicleType={ item.vehicleType }
 			/>
 		}) }
 	</>

@@ -1,6 +1,5 @@
 'use client';
 import { FC } from 'react';
-import { twMerge } from 'tailwind-merge';
 import { useLocale, useTranslations } from 'next-intl';
 import { config } from '@/config';
 import { SettingsProps } from '@/models/settings';
@@ -39,7 +38,7 @@ const Contacts: FC<Props> = ({ settings }) => {
 					<DropdownSection showDivider title={ t('light tires') }>
 						{ config.contacts.passengerTires.map((item, index) => {
 							return <DropdownItem
-								key={ item.phone }
+								key={ index }
 								startContent={ item.logo ?
 									<Image width={ 24 } height={ 24 } src={ `/icons/${ item.logo }-logo.svg` } alt=''/> :
 									<Icons.PhoneIcon className='fill-primary'/> }
@@ -53,7 +52,7 @@ const Contacts: FC<Props> = ({ settings }) => {
 					<DropdownSection showDivider title={ t('cargo tires') }>
 						{ config.contacts.truckTires.map((item, index) => {
 							return <DropdownItem
-								key={ item.phone }
+								key={ index }
 								startContent={ item.logo ?
 									<Image width={ 24 } height={ 24 } src={ `/icons/${ item.logo }-logo.svg` } alt=''/> :
 									<Icons.PhoneIcon className='fill-primary'/> }
@@ -67,7 +66,7 @@ const Contacts: FC<Props> = ({ settings }) => {
 					<DropdownSection title={ t('tire repair') }>
 						{ config.contacts.truckTires.map((item, index) => {
 							return <DropdownItem
-								key={ item.phone }
+								key={ index }
 								startContent={ item.logo ?
 									<Image width={ 24 } height={ 24 } src={ `/icons/${ item.logo }-logo.svg` } alt=''/> :
 									<Icons.PhoneIcon className='fill-primary'/> }

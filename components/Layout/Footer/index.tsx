@@ -13,7 +13,6 @@ import Logo from '@/components/UI/Logo';
 import styles from './index.module.scss';
 import { useAppDispatch } from '@/hooks/redux';
 import { setProgress } from '@/store/slices/progressSlice';
-import { twMerge } from 'tailwind-merge';
 
 type IconType = 'telegram' | 'facebook' | 'viber';
 
