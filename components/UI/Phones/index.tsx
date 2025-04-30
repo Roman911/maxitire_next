@@ -17,7 +17,6 @@ const Phones: FC<Props> = ({ isInfo, settings, className = '' }) => {
 	}[] = [
 		{ phone: settings.ua.config_telephone_vodafone, url: settings.ua.config_telephone_vodafone_url, logo: 'vodafone' },
 		{ phone: settings.ua.config_telephone_kievstar, url: settings.ua.config_telephone_kievstar_url, logo: 'kievstar' },
-		{ phone: settings.ua.config_telephone_life, url: settings.ua.config_telephone_life_url, logo: 'life' },
 	];
 
 	const filterTelephones = telephones.filter(i => i.phone);
