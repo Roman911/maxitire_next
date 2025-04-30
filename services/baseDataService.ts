@@ -11,7 +11,7 @@ import {
 } from '@/config/api';
 import { SettingsProps } from '@/models/settings';
 import { ProductsProps } from '@/models/products';
-import { BaseDataProps, KitDiskSize, KitTyreSize, ManufModels } from '@/models/baseData';
+import { BaseDataProps, CarModelProps, KitDiskSize, KitTyreSize, ManufModels } from '@/models/baseData';
 import { OrdersParamProps } from '@/models/ordersParam';
 
 export const baseDataAPI = createApi({
@@ -108,6 +108,21 @@ export const baseDataAPI = createApi({
 				url: deliveryEndpoints.novaPoshta.documentPrice,
 				method: API_CONSTANTS.METHODS.POST,
 				body: JSON.stringify(params),
+			}),
+		}),
+		fetchAutoModel: build.query<CarModelProps[], string>({
+			query: (id) => ({
+				url: baseEndpoints.autoBrandModel(id),
+			}),
+		}),
+		fetchAutoYear: build.query<number[], string>({
+			query: (id) => ({
+				url: baseEndpoints.autoBrandModelYear(id),
+			}),
+		}),
+		fetchAutoModelKit: build.query<CarModelProps[], string>({
+			query: (id) => ({
+				url: baseEndpoints.autoBrandModelKit(id),
 			}),
 		}),
 	}),
