@@ -3,6 +3,7 @@ import { FC, useState, Dispatch, SetStateAction } from 'react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { Button } from '@heroui/button';
+import MyButton from '@/components/UI/Button';
 import { Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure } from '@heroui/modal';
 import { useAppSelector } from '@/hooks/redux';
 import { NpCitySearch } from '@/components/UI/NpCitySearch';
@@ -85,14 +86,14 @@ const DeliveryCalculation: FC<Props> = ({ offer_id, quantity, price, setQuantity
 								</div>
 							</ModalBody>
 							<ModalFooter>
-								{ showDescription && <Button color='primary' size='lg' variant='light' className='w-max px-5 uppercase font-bold' onPress={ onReset }>
+								{ showDescription && <Button color='primary' size='lg' variant='light' className='w-max px-5' onPress={ onReset }>
 									{ t('change') }
 								</Button> }
-								{ showDescription ? <Button onPress={ onClose } color='primary' radius='full' size='lg' className='w-max px-5 uppercase font-bold'>
+								{ showDescription ? <MyButton onPress={ onClose } size='lg' className='w-max px-5'>
 									{ t('close') }
-								</Button> : <Button onPress={ handleClick } color='primary' radius='full' size='lg' className='w-max px-5 uppercase font-bold'>
+								</MyButton> : <MyButton onPress={ handleClick } size='lg' className='w-max px-5'>
 									{ t('calculate') }
-								</Button> }
+								</MyButton> }
 							</ModalFooter>
 						</>
 					) }

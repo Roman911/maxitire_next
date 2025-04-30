@@ -4,7 +4,7 @@ import ResetProgress from '@/components/Layout/ResetProgress';
 
 const LayoutWrapper = ({ children, className }: { children: ReactNode, className?: string }) => {
 	return (
-		<div className={ twMerge('container mx-auto px-4 py-5 min-h-[70vh]', className) }>
+		<div className={ twMerge('container max-w-6xl mx-auto px-4 py-5 min-h-[70vh]', className) }>
 			<ResetProgress />
 			{ children }
 		</div>

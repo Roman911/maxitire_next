@@ -5,7 +5,7 @@ import {
 	FORM_HEADERS,
 	baseEndpoints,
 	productEndpoints,
-	// deliveryEndpoints,
+	deliveryEndpoints,
 	orderEndpoints,
 	formEndpoints
 } from '@/config/api';
@@ -40,7 +40,7 @@ export const baseDataAPI = createApi({
 			query: (data) => ({
 				url: orderEndpoints.create,
 				method: API_CONSTANTS.METHODS.POST,
-				body: data,
+				body: JSON.stringify(data),
 				headers: FORM_HEADERS
 			}),
 		}),
@@ -48,7 +48,7 @@ export const baseDataAPI = createApi({
 			query: (data) => ({
 				url: formEndpoints.callback,
 				method: API_CONSTANTS.METHODS.POST,
-				body: data,
+				body: JSON.stringify(data),
 				headers: FORM_HEADERS
 			}),
 		}),
@@ -56,7 +56,7 @@ export const baseDataAPI = createApi({
 			query: (data) => ({
 				url: formEndpoints.ask,
 				method: API_CONSTANTS.METHODS.POST,
-				body: data,
+				body: JSON.stringify(data),
 				headers: FORM_HEADERS
 			}),
 		}),
@@ -78,6 +78,36 @@ export const baseDataAPI = createApi({
 		fetchOrdersParam: build.query<OrdersParamProps, string>({
 			query: () => ({
 				url: orderEndpoints.params,
+			}),
+		}),
+		createComment: build.mutation({
+			query: (comment) => ({
+				url: productEndpoints.reviews,
+				method: API_CONSTANTS.METHODS.POST,
+				body: JSON.stringify(comment),
+				headers: FORM_HEADERS
+			}),
+			invalidatesTags: ['Product'],
+		}),
+		fetchNpSearch: build.query({
+			query: (name) => ({
+				url: deliveryEndpoints.novaPoshta.search,
+				method: API_CONSTANTS.METHODS.POST,
+				body: {
+					name: name
+				}
+			}),
+		}),
+		fetchNpWarehouses: build.query({
+			query: (ref) => ({
+				url: deliveryEndpoints.novaPoshta.warehouses(ref),
+			}),
+		}),
+		fetchNpDocumentPrice: build.query({
+			query: (params) => ({
+				url: deliveryEndpoints.novaPoshta.documentPrice,
+				method: API_CONSTANTS.METHODS.POST,
+				body: JSON.stringify(params),
 			}),
 		}),
 	}),

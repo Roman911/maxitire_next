@@ -3,7 +3,7 @@ import { FC, FormEvent } from 'react';
 import { useTranslations } from 'next-intl';
 import * as Icons from '@/components/UI/Icons';
 import { Modal, ModalBody, ModalContent, ModalHeader, useDisclosure } from '@heroui/modal';
-import { Button } from '@heroui/button';
+import Button from '@/components/UI/Button';
 import { Input } from '@heroui/input';
 import { Form } from '@heroui/form';
 import { addToast } from '@heroui/toast';
@@ -46,7 +46,7 @@ const AddAskModal: FC<Props> = ({ id, productName }) => {
 
 	return (
 		<>
-			<Button onPress={ onOpen } isIconOnly aria-label='mail' className='bg-white rounded-full group'>
+			<Button onPress={ onOpen } isIconOnly aria-label='mail' className='bg-transparent rounded-full group'>
 				<Icons.MailIcon className='w-6 h-6 stroke-black group-hover:stroke-primary'/>
 			</Button>
 
@@ -81,8 +81,7 @@ const AddAskModal: FC<Props> = ({ id, productName }) => {
 										radius='none'
 										label={ t('your comment') }
 									/>
-									<Button type='submit' color='primary' radius='full' size='lg' isLoading={ isLoading }
-													className='uppercase font-bold'>
+									<Button type='submit' size='lg' isLoading={ isLoading } className='ml-auto'>
 										{ t('send') }
 									</Button>
 								</Form>

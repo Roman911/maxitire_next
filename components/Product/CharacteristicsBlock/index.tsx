@@ -1,6 +1,6 @@
 'use client'
 import { Link } from '@/i18n/routing';
-import { FC, useEffect, useState } from 'react';
+import { FC, ReactNode, useEffect, useState } from 'react';
 import DOMPurify from 'isomorphic-dompurify';
 import { useTranslations } from 'next-intl';
 import { twMerge } from 'tailwind-merge';
@@ -12,12 +12,18 @@ import { SeasonTransform, VehicleTypeTransform } from '@/lib/characteristicsTran
 import Comments from '../Comments';
 import type { ProductProps } from '@/models/product';
 import { Language, LanguageCode } from '@/models/language';
+import { Button, ButtonGroup } from '@heroui/button';
 
 const tabs = [
 	{ label: 'main characteristics' },
 	{ label: 'description' },
 	{ label: 'reviews' }
 ];
+
+interface MyButtonProps {
+	children: ReactNode
+	label: 'main characteristics' | 'description' | 'reviews'
+}
 
 interface CharacteristicsBlockProps {
 	locale: Language
@@ -26,7 +32,7 @@ interface CharacteristicsBlockProps {
 
 const CharacteristicsBlock: FC<CharacteristicsBlockProps> = ({ locale, data }) => {
 	const t = useTranslations('Filters');
-	const [ tab, setTab ] = useState('main characteristics');
+	const [ tab, setTab ] = useState<'main characteristics' | 'description' | 'reviews'>('main characteristics');
 	const [ showOptions, setShowOptions ] = useState(false);
 	const { section } = useAppSelector(state => state.filterReducer);
 	const description = data?.data.descr[locale === Language.UK ? LanguageCode.UA : Language.RU]?.description;
@@ -57,19 +63,36 @@ const CharacteristicsBlock: FC<CharacteristicsBlockProps> = ({ locale, data }) =
 		return <div dangerouslySetInnerHTML={ { __html: sanitizedHtml } }/>;
 	};
 
+	const MyButton = ({ children, label }: MyButtonProps) => {
+		return (
+			<Button
+				size='lg'
+				onPress={ () => setTab(label) }
+				variant='light'
+				radius='none'
+				className={
+					twMerge(
+						'max-w-max h-14 text-lg md:text-xl font-bold uppercase text-gray-700 before:absolute before:bottom-0 before:w-full before:h-1 before:bg-transparent',
+						tab === label && 'bg-gradient-to-l from-orange-500 to-orange-300 bg-clip-text text-transparent before:bg-amber-500 before:bg-gradient-to-l before:from-orange-500 before:to-orange-300'
+					)}
+			>
+				{ children }
+			</Button>
+		)
+	}
+
 	return <section className='mt-8 lg:mt-16'>
 		<div className='gap-x-2.5 border-b border-[#E0E4E8] hidden lg:flex'>
-			{ tabs.map((item, index) => {
-				return <button
-					key={ index }
-					onClick={ () => setTab(item.label) }
-					className={
-						twMerge('py-4 px-5 rounded-t text-sm font-bold uppercase focus:outline-none focus:shadow-outline-blue transition-all duration-300 bg-zinc-200 text-[#575C66]',
-							tab === item.label && 'bg-[#171719] text-white')
-					}>
-					{ t(item.label) }
-				</button>
-			}) }
+			<ButtonGroup className='gap-4 mb-4'>
+				{ tabs.map((item, index) => {
+					return <MyButton
+						key={ index }
+						label={ item.label as 'main characteristics' | 'description' | 'reviews' }
+					>
+						{ t(item.label) }
+					</MyButton>
+				}) }
+			</ButtonGroup>
 		</div>
 		<div className='relative text-left lg:hidden'>
 			<button type='button' onClick={ () => setShowOptions(prev => !prev) }
@@ -89,7 +112,7 @@ const CharacteristicsBlock: FC<CharacteristicsBlockProps> = ({ locale, data }) =
 						return <button
 							key={ index }
 							onClick={ () => {
-								setTab(item.label);
+								setTab(item.label as 'main characteristics' | 'description' | 'reviews');
 								setShowOptions(false);
 							} }
 							className='w-full text-start py-2 font-medium'

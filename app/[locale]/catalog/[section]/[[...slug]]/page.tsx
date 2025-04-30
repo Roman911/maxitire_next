@@ -70,11 +70,11 @@ export default async function Catalog({ params }: { params: Promise<{ locale: La
 		<LayoutWrapper>
 			<HeaderCatalog section={ section } slug={ slug } />
 			<div className='py-5 lg:flex lg:gap-10'>
-				<FilterAlt filterData={ filterData } section={ section } />
-				<div className='flex-1 -mt-8 lg:-mt-6'>
-					<FilterByCar />
-					<SelectionByCar />
-					<FilterActive locale={ locale } className='hidden lg:flex' slug={ slug } />
+				<FilterAlt filterData={ filterData } section={ section } locale={ locale } slug={ slug } />
+				<div className='flex-1'>
+					{/*<FilterByCar />*/}
+					{/*<SelectionByCar />*/}
+					{/*<FilterActive locale={ locale } className='hidden lg:flex' slug={ slug } />*/}
 					{ products.result ? <ProductList
 						classnames='grid-cols-1 lg:grid-cols-2 lg:grid-cols-3'
 						data={ products.data }

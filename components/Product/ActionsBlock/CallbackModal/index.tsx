@@ -2,7 +2,7 @@
 import { FC, FormEvent, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import * as Icons from '@/components/UI/Icons';
-import { Button } from '@heroui/button';
+import Button from '@/components/UI/Button';
 import { Form } from '@heroui/form';
 import { addToast } from '@heroui/toast';
 import { Modal, ModalBody, ModalContent, ModalHeader, useDisclosure } from '@heroui/modal';
@@ -52,8 +52,8 @@ const CallbackModal: FC<Props> = ({ id, quantity }) => {
 
 	return (
 		<>
-			<Button onPress={ onOpen } isIconOnly aria-label='mail' className='bg-white rounded-full group'>
-				<Icons.PhoneCircuitIcon className='w-6 h-6 stroke-black group-hover:stroke-primary'/>
+			<Button onPress={ onOpen } isIconOnly aria-label='mail' className='bg-transparent rounded-full group'>
+				<Icons.PhoneCircuitIcon className='w-5 h-5 stroke-black group-hover:stroke-primary'/>
 			</Button>
 			<Modal isOpen={ isOpen } onOpenChange={ onOpenChange }>
 				<ModalContent>
@@ -73,8 +73,8 @@ const CallbackModal: FC<Props> = ({ id, quantity }) => {
 										{ t('put phone') }
 									</p>
 									<PhoneMaskInput phoneErrorMessage={ phoneErrorMessage } />
-									<Button type='submit' color='primary' radius='full' size='lg' isLoading={ isLoading }
-													className='uppercase font-bold'>
+									<Button type='submit' size='lg' isLoading={ isLoading }
+													className='ml-auto'>
 										{ t('send') }
 									</Button>
 								</Form>

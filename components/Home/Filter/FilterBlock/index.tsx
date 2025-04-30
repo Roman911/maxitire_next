@@ -59,7 +59,7 @@ const FilterBlock: FC<Props> = ({ children, section, onSubmit }) => {
 
 	return (
 		<div
-			className='container max-w-6xl mx-auto py-6 lg:py-10 xl:py-12 px-4 lg:px-10 absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 bg-[#00000066] rounded-lg'>
+			className='container max-w-6xl mx-auto py-6 lg:py-10 xl:py-12 px-4 lg:px-10 md:absolute md:top-1/2 md:left-1/2 md:-translate-y-1/2 md:-translate-x-1/2 bg-[#00000066] rounded-lg'>
 			<div className='flex items-center justify-center gap-8 md:gap-20 mb-8 md:mb-0'>
 				<ButtonGroup className='gap-4 mb-4'>
 					<MyButton section={ section } sectionBtn={ Section.Tires } handleClick={ handleClick } name='tire'>

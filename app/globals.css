@@ -21,3 +21,7 @@
   --font-mono: var(--font-geist-mono);
   --radius-small: 4px;
 }
+
+body {
+  @apply bg-gray-50;
+}

@@ -3,8 +3,9 @@ import { useState } from 'react';
 import { PatternFormat } from 'react-number-format';
 import { useTranslations } from 'next-intl';
 import { Input } from '@heroui/input';
+import { twMerge } from 'tailwind-merge';
 
-const PhoneMaskInput = ({ phoneErrorMessage }: { phoneErrorMessage: null | string }) => {
+const PhoneMaskInput = ({ phoneErrorMessage, isDark }: { phoneErrorMessage: null | string, isDark?: boolean }) => {
 	const t = useTranslations('PhoneMask');
 	const [ phone, setPhone ] = useState<string | null>(null);
 
@@ -26,9 +27,9 @@ const PhoneMaskInput = ({ phoneErrorMessage }: { phoneErrorMessage: null | strin
 			name='phone'
 			variant='underlined'
 			classNames={{
-				label: 'text-white text-base',
-				input: 'group-data-[has-value=true]:text-white text-lg',
-				inputWrapper: 'after:bg-white shadow-white group-data-[focus=true]:after:bg-white'
+				label: twMerge('text-base', isDark && 'text-white'),
+				input: twMerge('text-lg', isDark && 'group-data-[has-value=true]:text-white'),
+				inputWrapper: twMerge(isDark && 'after:bg-white shadow-white group-data-[focus=true]:after:bg-white')
 			}}
 		/>
 	)

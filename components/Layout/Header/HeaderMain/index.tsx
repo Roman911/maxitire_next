@@ -59,7 +59,7 @@ const HeaderMain: FC<Props> = ({ settings }) => {
 				<ButtonBlock />
 				<NavbarMenuToggle className="sm:hidden" aria-label={ isMenuOpen ? "Close menu" : "Open menu" }/>
 			</NavbarContent>
-			<NavbarMenu className={ twMerge('mt-36 bg-white pt-6', styles.menu) }>
+			<NavbarMenu className={ twMerge('mt-18 bg-white pt-6', styles.menu) }>
 				<NavbarMenuItem>
 					<button
 						onClick={ () => handleClick('tires') }

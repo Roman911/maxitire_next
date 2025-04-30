@@ -64,12 +64,14 @@ const ActionsBlock: FC<ActionsBlockProps> = ({ id, className, section, quantity,
 
 	return (
 		<div className={ twMerge('gap-1.5 xl:gap-2.5 h-full', className) }>
-			<CallbackModal id={ id } quantity={ quantity }/>
-			<AddAskModal id={ id } productName={ productName }/>
-			<div className='p-3 bg-white rounded-full group cursor-pointer relative'>
-				<Icons.ShareIcon className='w-6 h-6 fill-black group-hover:fill-primary'/>
+			<Button onPress={ handleClickBookmarks } isIconOnly aria-label='mail' className='bg-transparent rounded-full group'>
+				<Icons.HeartIcon
+					className={ twMerge('w-6 h-6 text-black group-hover:text-primary', isBookmarks && 'fill-primary text-primary') }/>
+			</Button>
+			<div className='p-3 bg-transparent rounded-full group cursor-pointer relative'>
+				<Icons.ShareIcon className='w-5 h-5 fill-black group-hover:fill-primary'/>
 				<div
-					className='absolute top-10 left-0 bg-white rounded shadow-md py-4 px-6 hidden group-hover:flex flex-col gap-4'>
+					className='absolute top-10 left-0 bg-white rounded shadow-md py-4 px-6 hidden group-hover:flex flex-col gap-4 z-10'>
 					<FacebookShareButton url={ url }>
 						<div className='flex items-center gap-x-2'>
 							<FacebookIcon size={ 26 } round/>
@@ -120,10 +122,8 @@ const ActionsBlock: FC<ActionsBlockProps> = ({ id, className, section, quantity,
 					</button>
 				</div>
 			</div>
-			<Button onPress={ handleClickBookmarks } isIconOnly aria-label='mail' className='bg-white rounded-full group'>
-				<Icons.HeartIcon
-					className={ twMerge('w-6 h-6 stroke-black group-hover:stroke-primary', isBookmarks && 'fill-primary stroke-primary') }/>
-			</Button>
+			<CallbackModal id={ id } quantity={ quantity }/>
+			<AddAskModal id={ id } productName={ productName }/>
 		</div>
 	)
 };

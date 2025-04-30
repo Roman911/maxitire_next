@@ -3,7 +3,7 @@ import { FC, FormEvent, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { baseDataAPI } from '@/services/baseDataService';
 import Rating from '@/components/UI/Rating';
-import { Button } from '@heroui/button';
+import Button from '@/components/UI/Button';
 import { Form } from '@heroui/form';
 import { Input, Textarea } from '@heroui/input';
 

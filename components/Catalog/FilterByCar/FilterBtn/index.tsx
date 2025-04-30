@@ -9,7 +9,7 @@ interface FilterBtnProps {
 const FilterBtn: FC<FilterBtnProps> = ({ openFilter, title }) => {
 	return <button
 		onClick={() => openFilter()}
-		className='lg:hidden flex items-center font-bold gap-x-2.5'
+		className='lg:hidden flex items-center font-bold gap-x-2.5 mb-4'
 	>
 		<Icons.FilterIcon className='fill-black' />
 		{ title }
