@@ -2,8 +2,6 @@ import { FC } from 'react';
 import Image from 'next/image';
 import { Button } from '@heroui/button';
 import { Link } from '@/i18n/routing';
-import { Language } from '@/models/language';
-import { countryCodeTransform } from '@/lib/countryCodetransform';
 import CountryInfo from '@/components/UI/CountryInfo';
 import Quantity from '@/components/UI/Quantity';
 
@@ -34,12 +32,10 @@ const CartItem: FC<CartItemProps> = (
 		price,
 		sku,
 		country,
-		country_ru,
 		year,
 		offerQuantity,
 		setQuantity,
 		removeProduct,
-		locale
 	}) => {
 
 	const onChange = (e: { target: HTMLInputElement }) => {
@@ -65,7 +61,6 @@ const CartItem: FC<CartItemProps> = (
 				<div className='country mt-2 lg:col-span-4'>
 					{ (country || year) && <CountryInfo
 						country={ country }
-						countryCode={ countryCodeTransform( locale === Language.UK ? country : country_ru) }
 						year={ year }
 					/> }
 				</div>
