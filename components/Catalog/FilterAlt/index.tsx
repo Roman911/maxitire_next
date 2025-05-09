@@ -4,7 +4,6 @@ import { useTranslations } from 'next-intl';
 import { useDisclosure } from '@heroui/modal';
 import { Drawer, DrawerContent } from '@heroui/drawer';
 import { useAppDispatch, useAppSelector } from '@/hooks/redux';
-import { setParams } from '@/store/slices/filterSlice';
 import SwitchTabsByParams from './SwitchTabsByParams';
 import { Section } from '@/models/filter';
 import type { BaseDataProps } from '@/models/baseData';
@@ -26,12 +25,23 @@ interface Props {
 }
 
 const FilterAlt: FC<Props> = ({ filterData, section, locale, slug }) => {
-	const t = useTranslations('Filters')
+	const t = useTranslations('Filters');
 	const [ element, setElement ] = useState<HTMLElement | null>(null);
+	// const [ selectionByCar, setSelectionByCar ] = useState('');
 	const dispatch = useAppDispatch();
 	const { subsection } = useAppSelector(state => state.filterReducer);
 	const { data } = baseDataAPI.useFetchBaseDataQuery('');
 	const { isOpen, onOpen, onOpenChange } = useDisclosure();
+
+	// useEffect(() => {
+	// 	slug?.forEach(item => {
+	// 		const dashCount = (item.match(/-/g) || []).length;
+	// 		if(dashCount > 2) {
+	// 			setSelectionByCar(item);
+	// 			dispatch(changeSubsection(Subsection.ByCars));
+	// 		}
+	// 	})
+	// }, [dispatch, slug]);
 
 	const onChange = (name: string, value: number | string | undefined | null, element: HTMLElement) => {
 		if(name === 'brand') {
@@ -49,7 +59,7 @@ const FilterAlt: FC<Props> = ({ filterData, section, locale, slug }) => {
 					className='relative pb-32 lg:pb-4 px-4 pt-4 bg-white border border-gray-200 z-10 overflow-y-auto lg:overflow-y-visible'>
 					<SubmitFloat element={ element } btnTitle={ t('to apply') } setElement={ setElement } offset={ Section.Battery ? 354 : 360 }/>
 					<FilterActive locale={ locale } className='hidden lg:flex' slug={ slug } />
-					{ subsection === 'byCars' && <ByCar data={ data }/> }
+					{/*{ subsection === 'byCars' && <ByCar data={ data } selectionByCar={ selectionByCar } /> }*/}
 					{ section === Section.Tires && <SectionTires onChange={ onChange } filterData={ filterData } /> }
 					{ section === Section.Disks && <SectionDisks onChange={ onChange } filterData={ filterData } /> }
 					<SelectFromTo name='price' nameMin='minPrice' nameMax='maxPrice' from={ 200 } to={ 10000 }

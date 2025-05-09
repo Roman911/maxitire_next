@@ -10,7 +10,7 @@ interface SelectProps {
 	setState?: Dispatch<SetStateAction<string | undefined>>
 	options: Options[] | undefined
 	onChange: (name: string, value: number | string | null, label?: number | string | null) => void
-	defaultValue?: Options | undefined
+	defaultValue: string
 }
 
 const MySelect: FC<SelectProps> = (
@@ -20,7 +20,8 @@ const MySelect: FC<SelectProps> = (
 		options = [],
 		isDisabled = false,
 		onChange,
-		setState
+		setState,
+		defaultValue
 	}) => {
 	const t = useTranslations('Select');
 
@@ -42,6 +43,7 @@ const MySelect: FC<SelectProps> = (
 		} }
 		label={ label }
 		isDisabled={ isDisabled }
+		selectedKey={defaultValue}
 		onSelectionChange={ handleChange }
 		listboxProps={ {
 			emptyContent: t('no options message'),

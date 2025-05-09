@@ -210,6 +210,7 @@
     "manufacturers akum": "Виробники аккумуляторов",
     "manufacturers tyre": "Производители шин",
     "motorcycle tires": "Мотошины",
+    "payment": "Оплата",
     "placing an order": "Оформление заказа",
     "popular brands": "Популярные бренды",
     "price": "Цена",
@@ -235,7 +236,9 @@
     "tire repair": "Ремонт шин",
     "contact manager": "Звонок с менеджером",
     "what information interested": "Какая информация Вас интересует?",
-    "send": "Отправить"
+    "send": "Отправить",
+    "disks by size": "Диски по размеру",
+    "tires by size": "Шины по размеру"
   },
   "QuickOrder": {
     "quick order": "Быстрый заказ",

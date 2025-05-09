@@ -1,37 +1,48 @@
-import { FC } from 'react';
+'use client';
+import { FC, useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import MySelect from '@/components/UI/Select';
-import { useAppDispatch, useAppSelector } from '@/hooks/redux';
 import type { BaseDataProps } from '@/models/baseData';
-import { setCarFilter } from '@/store/slices/filterCarSlice';
 import { baseDataAPI } from '@/services/baseDataService';
+import { Section } from '@/models/filter';
 
-interface Auto {
-	label: string
-	value: number
+interface CarFilters {
+	brand: string | number;
+	model: string | number;
+	year: string | number;
+	modification: string | number;
 }
 
 interface Props {
 	data: BaseDataProps | undefined
+	section: Section
+	slug: string[]
 }
 
-const ByCar: FC<Props> = ( data ) => {
+const ByCar: FC<Props> = ({ data, slug}  ) => {
 	const t = useTranslations('Filters');
-	const dispatch = useAppDispatch();
-	const { filter } = useAppSelector(state => state.filterCarReducer);
-	const { filter: filterCar } = useAppSelector(state => state.filterCarReducer);
-	const { data: model, refetch: modelRefetch } = baseDataAPI.useFetchAutoModelQuery(`${filter.brand}`);
-	const { data: modelYear } = baseDataAPI.useFetchAutoYearQuery(`${filter.model}`);
-	const { data: modelKit, refetch: modelKitRefetch } = baseDataAPI.useFetchAutoModelKitQuery(`${filter.model}/${filter.year}`);
+	const [ filter, setFilter ] = useState<CarFilters>({brand: 0, model: 0, modification: 0, year: 0});
+	const { data: model, refetch: modelRefetch } = baseDataAPI.useFetchAutoModelQuery(filter.brand?.toString() ?? '');
+	const { data: modelYear } = baseDataAPI.useFetchAutoYearQuery(filter.model?.toString() ?? '');
+	const { data: modelKit, refetch: modelKitRefetch } = baseDataAPI.useFetchAutoModelKitQuery(
+		`${filter.model}/${filter.year}`
+	);
+
+	useEffect(() => {
+		if(slug) {
+			const numbers = slug[0].split('-').filter(part => /^\d+$/.test(part)).map(Number);
+			setFilter({ brand: numbers[1], model: numbers[2], modification: numbers[3], year: numbers[0] });
+		}
+	}, [slug]);
 
 	const onChangeByCar = (name: string, value: number | string | null) => {
-		dispatch(setCarFilter({ ...filter, [name]: value }));
+		setFilter({ ...filter, [name]: value });
 		if(name === 'model') {
 			modelRefetch();
 		} else if(name === 'modification' || name === 'year') {
 			modelKitRefetch();
 		}
-	}
+	};
 
 	return (
 		<>
@@ -39,9 +50,9 @@ const ByCar: FC<Props> = ( data ) => {
 				{ <MySelect
 					name='brand'
 					label={ t('car brand') }
-					options={ data.data?.auto?.map(item => ({ value: item.value, label: item.label })) }
+					options={ data?.auto?.map(item => ({ value: item.value, label: item.label })) }
 					onChange={ onChangeByCar }
-					defaultValue={ filterCar?.brand ? data.data?.auto?.find((i: Auto) => i.value === filterCar.brand) : undefined }
+					defaultValue={ filter.brand ? filter.brand.toString() : '' }
 				/> }
 			</div>
 			<div className='mt-2'>
@@ -51,7 +62,7 @@ const ByCar: FC<Props> = ( data ) => {
 					options={ model?.map(item => ({ value: item.value, label: item.label })) }
 					isDisabled={ model?.length === 0 }
 					onChange={ onChangeByCar }
-					defaultValue={ filterCar?.model ? model?.find(i => i.value === filterCar.model) : undefined }
+					defaultValue={ filter.model ? filter.model.toString() : '' }
 				/>
 			</div>
 			<div className='mt-2'>
@@ -61,7 +72,7 @@ const ByCar: FC<Props> = ( data ) => {
 					options={ modelYear?.map(item => ({ value: item, label: `${item}` })) }
 					isDisabled={ modelYear?.length === 0 }
 					onChange={ onChangeByCar }
-					defaultValue={ filterCar?.year ? { value: `${filterCar?.year}`, label: `${filterCar?.year}` } : undefined }
+					defaultValue={ filter.year ? filter.year.toString() : '' }
 				/>
 			</div>
 			<div className='mt-2'>
@@ -71,7 +82,7 @@ const ByCar: FC<Props> = ( data ) => {
 					options={ modelKit?.map(item => ({ value: item.value, label: item.label })) }
 					isDisabled={ modelKit?.length === 0 }
 					onChange={ onChangeByCar }
-					defaultValue={ filterCar?.modification ? modelKit?.find(i => i.value === filterCar.modification) : undefined }
+					defaultValue={ filter.modification ? filter.modification.toString() : '' }
 				/>
 			</div>
 		</>

@@ -225,6 +225,7 @@
     "go to cart": "Перейти в корзину",
     "phones": "Телефони",
     "in cart": "У кошику",
+    "payment": "Оплата",
     "price one tire": "Ціна вказана за одну шину без диску",
     "price one disk": "Ціна вказана за один диск без шини",
     "place an order": "Оформити замовлення",
@@ -236,7 +237,9 @@
     "tire repair": "Ремонт шин",
     "contact manager": "Звʼязок з менеджером",
     "what information interested": "Яка інформація Вас цікавить?",
-    "send": "Надіслати"
+    "send": "Надіслати",
+    "disks by size": "Диски за розміром",
+    "tires by size": "Шини за розміром"
   },
   "QuickOrder": {
     "quick order": "Швидке замовлення",

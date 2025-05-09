@@ -8,6 +8,10 @@ export const links = [
 		url: '/catalog-map',
 	},
 	{
+		title: 'payment',
+		url: '/page/payment',
+	},
+	{
 		title: 'about us',
 		url: '/about-us',
 	},
