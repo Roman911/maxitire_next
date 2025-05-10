@@ -1,10 +1,12 @@
 'use client';
-import { FC, useEffect, useState } from 'react';
-import { useTranslations } from 'next-intl';
+import { FC, useCallback, useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useLocale, useTranslations } from 'next-intl';
 import MySelect from '@/components/UI/Select';
 import type { BaseDataProps } from '@/models/baseData';
 import { baseDataAPI } from '@/services/baseDataService';
 import { Section } from '@/models/filter';
+import Button from '@/components/UI/Button';
 
 interface CarFilters {
 	brand: string | number;
@@ -19,7 +21,9 @@ interface Props {
 	slug: string[]
 }
 
-const ByCar: FC<Props> = ({ data, slug}  ) => {
+const ByCar: FC<Props> = ({ data, slug, section}  ) => {
+	const router = useRouter();
+	const locale = useLocale();
 	const t = useTranslations('Filters');
 	const [ filter, setFilter ] = useState<CarFilters>({brand: 0, model: 0, modification: 0, year: 0});
 	const { data: model, refetch: modelRefetch } = baseDataAPI.useFetchAutoModelQuery(filter.brand?.toString() ?? '');
@@ -43,6 +47,12 @@ const ByCar: FC<Props> = ({ data, slug}  ) => {
 			modelKitRefetch();
 		}
 	};
+
+	const handleSubmit = useCallback(() => {
+		const brandLabel = data?.auto.find(item => item.value == filter.brand)?.label.toLowerCase() ?? '';
+		const link = `${brandLabel} ${filter.year} ${filter.brand} ${filter.model} ${filter.modification}`;
+		router.push(`/${locale}/selection-by-car/${section}/${link.split(' ').join('-')}`);
+	}, [data?.auto, filter, router, locale]);
 
 	return (
 		<>
@@ -75,7 +85,7 @@ const ByCar: FC<Props> = ({ data, slug}  ) => {
 					defaultValue={ filter.year ? filter.year.toString() : '' }
 				/>
 			</div>
-			<div className='mt-2'>
+			<div className='mt-2 mb-4'>
 				<MySelect
 					name='modification'
 					label={ t('modification') }
@@ -85,6 +95,14 @@ const ByCar: FC<Props> = ({ data, slug}  ) => {
 					defaultValue={ filter.modification ? filter.modification.toString() : '' }
 				/>
 			</div>
+			<Button
+				size='lg'
+				onPress={handleSubmit}
+				className='w-full'
+				isDisabled={!filter.modification}
+			>
+				123
+			</Button>
 		</>
 	)
 };

@@ -5,13 +5,12 @@ import Title from '@/components/UI/Title';
 import ByCar from '@/components/Catalog/FilterAlt/ByCar';
 import SwitchTabs from '@/components/SelectionByCar/SwitchTabs';
 import Content from '@/components/SelectionByCar/Content';
+import { DEFAULT_HEADERS } from '@/config/api';
 
 async function getBaseData() {
 	const res = await fetch(`${ process.env.SERVER_URL }/baseData`, {
 		method: 'GET',
-		headers: {
-			'Access-Control-Allow-Credentials': 'true',
-		}
+		headers: DEFAULT_HEADERS
 	});
 	return await res.json();
 }
@@ -20,8 +19,6 @@ export default async function SelectionByCar({ params }: { params: Promise<{ sec
 	const { section, slug } = await params;
 	const baseData = await getBaseData();
 	const numbers = slug && slug[0].split('-').filter(part => /^\d+$/.test(part)).map(Number);
-
-	console.log(numbers);
 
 	const path = [
 		{
@@ -47,9 +44,11 @@ export default async function SelectionByCar({ params }: { params: Promise<{ sec
 					</div>
 				</div>
 				<Content
+					section={ section }
 					brand={ numbers ? numbers[1] : 0 }
 					model={ numbers ? numbers[2] : 0 }
 					year={ numbers ? numbers[0] : 0 }
+					modification={ numbers ? numbers[3] : 0 }
 					car={ slug ? baseData.auto.find((item: { value: number, label: string }) => item.value === numbers[1]).label : '' }
 				/>
 			</div>

@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import {
 	API_CONSTANTS,
-	// DEFAULT_HEADERS,
+	DEFAULT_HEADERS,
 	FORM_HEADERS,
 	baseEndpoints,
 	productEndpoints,
@@ -16,7 +16,10 @@ import { OrdersParamProps } from '@/models/ordersParam';
 
 export const baseDataAPI = createApi({
 	reducerPath: 'baseDataAPI',
-	baseQuery: fetchBaseQuery({ baseUrl: API_CONSTANTS.BASE_URL }),
+	baseQuery: fetchBaseQuery({
+		baseUrl: API_CONSTANTS.BASE_URL,
+		headers: DEFAULT_HEADERS,
+	}),
 	tagTypes: ['Product'],
 	endpoints: (build) => ({
 		fetchSettings: build.query<SettingsProps, string>({

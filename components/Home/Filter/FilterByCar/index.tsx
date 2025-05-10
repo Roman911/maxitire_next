@@ -46,8 +46,6 @@ const FilterByCar: FC<Props> = ({ section }) => {
 		`${carFilters.model}/${carFilters.year}`
 	);
 
-	console.log(carFilters)
-
 	const filters: FilterConfig[] = useMemo(() => [
 		{
 			label: filterNames.brand,

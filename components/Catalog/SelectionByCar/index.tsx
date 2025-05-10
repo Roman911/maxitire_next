@@ -1,23 +1,26 @@
 'use client'
+import { FC } from 'react';
 import { Link } from '@/i18n/routing';
 import { useTranslations } from 'next-intl';
-import { useAppSelector } from '@/hooks/redux';
 import { baseDataAPI } from '@/services/baseDataService';
-import { Section, Subsection } from '@/models/filter';
+import { Section } from '@/models/filter';
 
-const SelectionByCar = () => {
+interface Props {
+	section: Section
+	modification: number | undefined
+}
+
+const SelectionByCar: FC<Props> = ({ modification, section }) => {
 	const t = useTranslations('Main');
-	const { section, subsection } = useAppSelector(state => state.filterReducer);
-	const { filter } = useAppSelector(state => state.filterCarReducer);
-	const { data } = baseDataAPI.useFetchKitTyreSizeQuery(`${filter.modification}`);
-	const { data: diskSize } = baseDataAPI.useFetchKitDiskSizeQuery(`${filter.modification}`);
+	const { data } = baseDataAPI.useFetchKitTyreSizeQuery(`${modification}`);
+	const { data: diskSize } = baseDataAPI.useFetchKitDiskSizeQuery(`${modification}`);
 
-	if(subsection === Subsection.ByParams || data?.length === 0) return null;
+	if(!data || data?.length === 0) return null;
 
-	return <div className='mb-5 border-y py-4'>
+	return <div className='mb-5 py-4'>
 		<div className='text-gray-500'>Ваш авто:</div>
 		<div className='font-bold mt-2'>
-			{ `${ data?.[0].kits.car2_model.car2_brand.name } ${ data?.[0].kits.car2_model.name } ${ data?.[0].kits.name } (${ data?.[0].kits.year })` }
+			{ `${ data && data[0].kits.car2_model.car2_brand.name } ${ data && data[0].kits.car2_model.name } ${ data && data[0].kits.name } (${ data && data[0].kits.year })` }
 		</div>
 		<h6 className='text-gray-500 mt-4'>
 			{ t('factory') }
