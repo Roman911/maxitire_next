@@ -239,7 +239,8 @@
     "what information interested": "Яка інформація Вас цікавить?",
     "send": "Надіслати",
     "disks by size": "Диски за розміром",
-    "tires by size": "Шини за розміром"
+    "tires by size": "Шини за розміром",
+    "selection tires and disks": "Підбір шин та дисків по авто"
   },
   "QuickOrder": {
     "quick order": "Швидке замовлення",

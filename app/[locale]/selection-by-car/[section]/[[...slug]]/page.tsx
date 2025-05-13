@@ -22,24 +22,21 @@ export default async function SelectionByCar({ params }: { params: Promise<{ sec
 
 	const path = [
 		{
-			title: '123',
-			translations: false,
-			href: `/`,
+			title: 'selection tires and disks',
+			translations: true,
+			href: `/selection-by-car`,
 		},
 	];
 
 	return (
 		<LayoutWrapper>
 			<Breadcrumbs path={ path } />
-			<Title isMain={ true } title={ '123' } translations={ false } className='mt-3 text-lg font-medium px-0 lg:px-3 mb-3 lg:mb-1' />
-			<div className='py-5 lg:flex lg:gap-10'>
-				<div className='hidden lg:block'>
+			<Title title='selection tires and disks' translations={ true } className='mt-3 text-lg font-medium px-0 lg:px-3 mb-3 lg:mb-1' />
+			<div className='py-2 md:py-5 lg:flex lg:gap-10'>
+				<div>
+					<SwitchTabs section={ section } path={ slug ? slug[0] : '' } />
 					<div
-						className='filter lg:h-auto w-[calc(100%-70px)] lg:w-64 mr-6 pt-4 lg:pt-0 bg-white lg:bg-transparent'>
-						<SwitchTabs section={ section }/>
-					</div>
-					<div
-						className='relative pb-32 lg:pb-4 px-4 pt-4 bg-white border border-gray-200 z-10 overflow-y-auto lg:overflow-y-visible'>
+						className='relative pb-4 px-4 pt-4 bg-white border border-gray-200 z-10 overflow-y-auto lg:overflow-y-visible'>
 						<ByCar data={ baseData } section={ section } slug={ slug } />
 					</div>
 				</div>

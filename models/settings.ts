@@ -5,10 +5,14 @@ interface SettingsItems {
 	config_owner: string
 	config_telephone_besk_url: string
 	config_telephone_besk: string
+	config_telephone_vodafone2_url: string
 	config_telephone_vodafone_url: string
 	config_telephone_vodafone: string
+	config_telephone_vodafone2: string
 	config_telephone_kievstar_url: string
+	config_telephone_kievstar2_url: string
 	config_telephone_kievstar: string
+	config_telephone_kievstar2: string
 	config_telephone_life_url: string
 	config_telephone_life: string
 	config_address: string | null

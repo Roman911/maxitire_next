@@ -52,7 +52,7 @@ const ByCar: FC<Props> = ({ data, slug, section}  ) => {
 		const brandLabel = data?.auto.find(item => item.value == filter.brand)?.label.toLowerCase() ?? '';
 		const link = `${brandLabel} ${filter.year} ${filter.brand} ${filter.model} ${filter.modification}`;
 		router.push(`/${locale}/selection-by-car/${section}/${link.split(' ').join('-')}`);
-	}, [data?.auto, filter, router, locale]);
+	}, [data?.auto, filter, router, locale, section]);
 
 	return (
 		<>
@@ -101,7 +101,7 @@ const ByCar: FC<Props> = ({ data, slug, section}  ) => {
 				className='w-full'
 				isDisabled={!filter.modification}
 			>
-				123
+				{ t('choose') }
 			</Button>
 		</>
 	)

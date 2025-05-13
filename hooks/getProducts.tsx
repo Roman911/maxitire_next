@@ -13,114 +13,83 @@ interface ProductItem {
 	quantity?: number;
 }
 
-export const useAppGetProducts = (products: ProductItem[] = [], reducer: 'reducerCart' | 'reducerBookmarks' | 'reducerComparison' | 'recentlyViewed', byOffer?: boolean) => {
+type GroupedIds = { tires: number[]; cargo: number[]; disks: number[]; battery: number[] };
+type GroupedItems = { tiresItems: Product[]; cargoItems: Product[]; disksItems: Product[]; batteryItems: Product[] };
+
+const emptyIds: GroupedIds = { tires: [], cargo: [], disks: [], battery: [] };
+
+export const useAppGetProducts = (
+	products: ProductItem[] = [],
+	reducer: 'reducerCart' | 'reducerBookmarks' | 'reducerComparison' | 'recentlyViewed',
+	byOffer?: boolean
+) => {
 	const dispatch = useAppDispatch();
 
-	const [groupedIds, setGroupedIds] = useState<{ tires: number[]; cargo: number[]; disks: number[]; battery: number[] }>({
-		tires: [],
-		cargo: [],
-		disks: [],
-		battery: [],
-	});
-
-	const [groupedItems, setGroupedItems] = useState<{ tiresItems: Product[]; cargoItems: Product[]; disksItems: Product[]; batteryItems: Product[] }>({
+	const [groupedIds, setGroupedIds] = useState<GroupedIds>(emptyIds);
+	const [groupedItems, setGroupedItems] = useState<GroupedItems>({
 		tiresItems: [],
 		cargoItems: [],
 		disksItems: [],
 		batteryItems: [],
 	});
-
 	const [newProducts, setNewProducts] = useState<Product[]>([]);
 
-	const { data: dataTires, isLoading: tiresIsLoading } = baseDataAPI.useFetchProductsQuery({
-		id: `${byOffer ? '?Offer_id' : '?product_ids'}=${groupedIds.tires.join(',')}`,
-		length: groupedIds.tires.length || 1,
-	});
-	const { data: dataCargo, isLoading: cargoIsLoading } = baseDataAPI.useFetchProductsQuery({
-		id: `${byOffer ? '?typeproduct=2&Offer_id' : '?typeproduct=2&product_ids'}=${groupedIds.cargo.join(',')}`,
-		length: groupedIds.cargo.length || 1,
-	});
-	const { data: dataDisks, isLoading: disksIsLoading } = baseDataAPI.useFetchProductsQuery({
-		id: `${byOffer ? '?typeproduct=3&Offer_id' : '?typeproduct=3&product_ids'}=${groupedIds.disks.join(',')}`,
-		length: groupedIds.disks.length || 1,
-	});
-	const { data: dataBattery, isLoading } = baseDataAPI.useFetchProductsQuery({
-		id: `${byOffer ? '?typeproduct=4&Offer_id' : '?typeproduct=4&product_ids'}=${groupedIds.battery.join(',')}`,
-		length: groupedIds.battery.length || 1,
-	});
-
-	// Group products by their section and update grouped IDs state
+	// Group products by section
 	useEffect(() => {
-		const grouped = products.reduce(
-			(acc, product) => {
-				switch (product.section) {
-					case 'tires':
-						acc.tires.push(product.id);
-						break;
-					case 'cargo':
-						acc.cargo.push(product.id);
-						break;
-					case 'disks':
-						acc.disks.push(product.id);
-						break;
-					case 'battery':
-						acc.battery.push(product.id);
-						break;
-					default:
-						break;
-				}
-				return acc;
-			},
-			{ tires: [], cargo: [], disks: [], battery: [] } as { tires: number[]; cargo: number[]; disks: number[]; battery: number[] }
-		);
+		const grouped: GroupedIds = { tires: [], cargo: [], disks: [], battery: [] };
+		products.forEach(({ id, section }) => {
+			if (grouped[section as keyof GroupedIds]) {
+				grouped[section as keyof GroupedIds].push(id);
+			}
+		});
 		setGroupedIds(grouped);
 	}, [products]);
 
-	// Update grouped items based on data fetched from API
+	// Query definitions
+	const { data: dataTires, isLoading: tiresIsLoading } = baseDataAPI.useFetchProductsQuery({
+		id: `${byOffer ? '?Offer_id' : '?product_ids'}=${groupedIds.tires.join(',')}`,
+		length: groupedIds.tires.length || 1,
+	}, { skip: groupedIds.tires.length === 0 });
+
+	const { data: dataCargo, isLoading: cargoIsLoading } = baseDataAPI.useFetchProductsQuery({
+		id: `${byOffer ? '?typeproduct=2&Offer_id' : '?typeproduct=2&product_ids'}=${groupedIds.cargo.join(',')}`,
+		length: groupedIds.cargo.length || 1,
+	}, { skip: groupedIds.cargo.length === 0 });
+
+	const { data: dataDisks, isLoading: disksIsLoading } = baseDataAPI.useFetchProductsQuery({
+		id: `${byOffer ? '?typeproduct=3&Offer_id' : '?typeproduct=3&product_ids'}=${groupedIds.disks.join(',')}`,
+		length: groupedIds.disks.length || 1,
+	}, { skip: groupedIds.disks.length === 0 });
+
+	const { data: dataBattery, isLoading: batteryIsLoading } = baseDataAPI.useFetchProductsQuery({
+		id: `${byOffer ? '?typeproduct=4&Offer_id' : '?typeproduct=4&product_ids'}=${groupedIds.battery.join(',')}`,
+		length: groupedIds.battery.length || 1,
+	}, { skip: groupedIds.battery.length === 0 });
+
+	// Helper for removing invalid products
+	const cleanInvalidProducts = (data: Product[] | undefined, ids: number[]) => {
+		if (!data) return;
+		ids.forEach(id => {
+			const found = data.find(item => (byOffer ? item.best_offer?.id : item.group) === id);
+			if (!found && reducer !== 'recentlyViewed') {
+				removeFromStorage(reducer, id);
+				dispatch(
+					reducer === 'reducerCart'
+						? removeCart(id)
+						: reducer === 'reducerBookmarks'
+							? removeBookmarks(id)
+							: removeComparison(id)
+				);
+			}
+		});
+	};
+
+	// Sync fetched items and cleanup
 	useEffect(() => {
-		if(dataTires) {
-			groupedIds.tires.forEach(product => {
-				if(!dataTires.data?.products.find(item => byOffer ? item.best_offer.id === product : item.group)) {
-					if(reducer !== 'recentlyViewed') {
-						removeFromStorage(reducer, product);
-						dispatch(reducer === 'reducerCart' ? removeCart(product) : reducer === 'reducerBookmarks' ? removeBookmarks(product) : removeComparison(product));
-					}
-				}
-			})
-		}
-
-		if(dataCargo) {
-			groupedIds.cargo.forEach(product => {
-				if(!dataCargo.data?.products.find(item => byOffer ? item.best_offer.id === product : item.group)) {
-					if(reducer !== 'recentlyViewed') {
-						removeFromStorage(reducer, product);
-						dispatch(reducer === 'reducerCart' ? removeCart(product) : reducer === 'reducerBookmarks' ? removeBookmarks(product) : removeComparison(product));
-					}
-				}
-			})
-		}
-
-		if(dataDisks) {
-			groupedIds.disks.forEach(product => {
-				if(!dataDisks.data?.products.find(item => byOffer ? item.best_offer.id === product : item.group)) {
-					if(reducer !== 'recentlyViewed') {
-						removeFromStorage(reducer, product);
-						dispatch(reducer === 'reducerCart' ? removeCart(product) : reducer === 'reducerBookmarks' ? removeBookmarks(product) : removeComparison(product));
-					}
-				}
-			})
-		}
-
-		if(dataBattery) {
-			groupedIds.battery.forEach(product => {
-				if(!dataBattery.data?.products.find(item => byOffer ? item.best_offer.id === product : item.group)) {
-					if(reducer !== 'recentlyViewed') {
-						removeFromStorage(reducer, product);
-						dispatch(reducer === 'reducerCart' ? removeCart(product) : reducer === 'reducerBookmarks' ? removeBookmarks(product) : removeComparison(product));
-					}
-				}
-			})
-		}
+		cleanInvalidProducts(dataTires?.data?.products, groupedIds.tires);
+		cleanInvalidProducts(dataCargo?.data?.products, groupedIds.cargo);
+		cleanInvalidProducts(dataDisks?.data?.products, groupedIds.disks);
+		cleanInvalidProducts(dataBattery?.data?.products, groupedIds.battery);
 
 		setGroupedItems({
 			tiresItems: dataTires?.data?.products || [],
@@ -130,22 +99,26 @@ export const useAppGetProducts = (products: ProductItem[] = [], reducer: 'reduce
 		});
 	}, [dataTires, dataCargo, dataDisks, dataBattery]);
 
-	// Sort and update new products based on the original products array
+	// Sort returned products to match original order
 	useEffect(() => {
-		const allProducts = [...groupedItems.tiresItems, ...groupedItems.cargoItems, ...groupedItems.disksItems, ...groupedItems.batteryItems];
-		const sortedProducts = products
-			.map((product) => allProducts.find((item) => item.product_id === product.id))
-			.filter((item): item is Product => !!item); // Type narrowing to ensure no undefined values
-
-		setNewProducts(sortedProducts);
+		const all = [
+			...groupedItems.tiresItems,
+			...groupedItems.cargoItems,
+			...groupedItems.disksItems,
+			...groupedItems.batteryItems,
+		];
+		const sorted = products
+			.map(({ id }) => all.find(product => product.product_id === id))
+			.filter((item): item is Product => Boolean(item));
+		setNewProducts(sorted);
 	}, [groupedItems, products]);
 
 	return {
 		products: newProducts,
-		tires: groupedIds.tires.length > 0 ? groupedItems.tiresItems : [],
-		cargo: groupedIds.cargo.length > 0 ? groupedItems.cargoItems : [],
-		disks: groupedIds.disks.length > 0 ? groupedItems.disksItems : [],
-		battery: groupedIds.battery.length > 0 ? groupedItems.batteryItems : [],
-		isLoading: tiresIsLoading || cargoIsLoading || disksIsLoading || isLoading,
+		tires: groupedItems.tiresItems,
+		cargo: groupedItems.cargoItems,
+		disks: groupedItems.disksItems,
+		battery: groupedItems.batteryItems,
+		isLoading: tiresIsLoading || cargoIsLoading || disksIsLoading || batteryIsLoading,
 	};
 };

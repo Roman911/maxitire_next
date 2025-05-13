@@ -3,11 +3,11 @@ import { twMerge } from 'tailwind-merge';
 import { Section } from '@/models/filter';
 import { useTranslations } from 'next-intl';
 
-const SwitchTabs = ({ section }: { section: Section }) => {
+const SwitchTabs = ({ section, path }: { section: Section, path: string }) => {
 	const t = useTranslations('Main');
 
 	const renderTab = (value: Section) => {
-		const url = `/selection-by-car/${ value }`;
+		const url = `/selection-by-car/${ value }/${path}`;
 
 		return (
 			<Link
@@ -23,7 +23,7 @@ const SwitchTabs = ({ section }: { section: Section }) => {
 	};
 
 	return (
-		<div className='filter lg:h-auto w-[calc(100%-70px)] lg:w-full pt-4 lg:pt-0 bg-white lg:bg-transparent'>
+		<div className='filter h-auto w-[calc(100%-70px)] lg:w-full lg:pt-0'>
 			<div className='filter-tabs grid grid-cols-2 gap-2.5 -mb-0.5'>
 				{ renderTab(Section.Tires) }
 				{ renderTab(Section.Disks) }

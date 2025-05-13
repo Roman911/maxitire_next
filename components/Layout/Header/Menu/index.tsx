@@ -38,7 +38,7 @@ const Navbar = () => {
 	return (
 		<div className='bg-white hidden lg:block relative'>
 			<nav className='container mx-auto max-w-6xl flex justify-between items-center'>
-				{[{ section: 'tires', label: t('cartires') }, { section: 'disks', label: t('cardiscs') }]
+				{[{ section: 'tires', label: t('tires') }, { section: 'disks', label: t('disks') }]
 					.map((item, i) => {
 						return <ButtonMeu key={ i } sectionItem={ item.section } label={ item.label } />
 					})}
