@@ -72,7 +72,6 @@ const BuyActions: FC<Props> = ({ locale, offerId, quantity, section, data, onSub
 				</MyButton>
 			}
 			<QuickOrder
-				locale={ locale }
 				offerId={ offerId }
 				quantity={ quantity }
 				section={ section }
