@@ -10,7 +10,7 @@ interface SelectProps {
 	setState?: Dispatch<SetStateAction<string | undefined>>
 	options: Options[] | undefined
 	onChange: (name: string, value: number | string | null, label?: number | string | null) => void
-	defaultValue: string
+	defaultValue?: string
 }
 
 const MySelect: FC<SelectProps> = (
