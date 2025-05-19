@@ -44,10 +44,10 @@ const Offers: FC<Props> = ({ locale, offerId, offers, setOfferId, setQuantity })
 									mobileHidden={ true }
 								/>
 							</div>
-							<div className='font-medium col-span-1 lg:col-span-1 text-sm lg:ml-3'>
+							<div className='font-medium col-span-2 lg:col-span-2 text-sm lg:ml-3'>
 								{ item.quantity } шт.
 							</div>
-							<div className='storage col-span-4 lg:col-span-3 text-sm text-gray-600 content-center flex items-center gap-x-1 lg:gap-x-2'>
+							<div className='storage col-span-3 lg:col-span-2 text-sm text-gray-600 content-center flex items-center gap-x-1 lg:gap-x-2'>
 								<Icons.MarkerIcon className='fill-gray-600 w-6' />
 								{ locale === Language.UK ? item.posts.city : item.posts.city_ru }
 							</div>

@@ -43,7 +43,10 @@
     "name": "Имя",
     "rating": "Оценка",
     "enter your name": "Введите ваше имя",
-    "enter your comment": "Введите ваш комментарий"
+    "enter your comment": "Введите ваш комментарий",
+    "sent comment": "Спасибо за отзыв",
+    "your comment sent": "Ваш отзыв успешно отправлен",
+    "sent message": "Сообщение отправлено"
   },
   "Delivery": {
     "cost": "Стоимость",
@@ -239,7 +242,8 @@
     "send": "Отправить",
     "disks by size": "Диски по размеру",
     "tires by size": "Шины по размеру",
-    "selection tires and disks": "Подбор шин и дисков по авто"
+    "selection tires and disks": "Подбор шин и дисков по авто",
+    "agricultural and special equipment": "Сельхоз и спецтехника"
   },
   "QuickOrder": {
     "quick order": "Быстрый заказ",

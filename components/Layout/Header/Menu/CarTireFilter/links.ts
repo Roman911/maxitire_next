@@ -84,6 +84,21 @@ export const brandsLinks = [
 
 export const diameterLinks = [
 	{
+		label: 'R13',
+		href: '/catalog/tires/d-13',
+		border: true
+	},
+	{
+		label: 'R14',
+		href: '/catalog/tires/d-14',
+		border: true
+	},
+	{
+		label: 'R15',
+		href: '/catalog/tires/d-15',
+		border: true
+	},
+	{
 		label: 'R16',
 		href: '/catalog/tires/d-16',
 		border: true

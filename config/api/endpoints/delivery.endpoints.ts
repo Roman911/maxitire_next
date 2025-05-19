@@ -9,6 +9,7 @@ export const deliveryEndpoints = {
 	},
 	delivery: {
 		cities: (name: string) => `${DELIVERY}/cities/${name}`,
-		warehouses: (ref: string) => `${DELIVERY}/warehouses/${ref}`
+		warehouses: (ref: string) => `${DELIVERY}/warehouses/${ref}`,
+		calculate: () => `${DELIVERY}/calculate`
 	}
 } as const;

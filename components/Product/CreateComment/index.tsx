@@ -2,6 +2,7 @@
 import { FC, FormEvent, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { baseDataAPI } from '@/services/baseDataService';
+import { addToast } from '@heroui/toast';
 import Rating from '@/components/UI/Rating';
 import Button from '@/components/UI/Button';
 import { Form } from '@heroui/form';
@@ -34,6 +35,11 @@ const CreateComment: FC<CreateCommentProps> = ({ model_id, product_id, trc_id })
 			trc_id,
 		}).then(data => {
 			if(data) {
+				addToast({
+					title: t('sent comment'),
+					description: t('your comment sent'),
+					classNames: { base: 'text-black dark:text-gray-50', title: 'text-black dark:text-gray-50' },
+				});
 				form.reset(); // Reset form fields
 				setRate(0); // Reset rating
 			}

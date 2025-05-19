@@ -2,48 +2,37 @@ import type { Metadata } from 'next';
 import LayoutWrapper from '@/components/Layout/LayoutWrapper';
 import Breadcrumbs from '@/components/UI/Breadcrumbs';
 import Title from '@/components/UI/Title';
-import { Language, LanguageCode } from '@/models/language';
-import { BrandsObject, BrandsObjectItems } from '@/models/brends';
+import { Language } from '@/models/language';
 import ProductList from '@/components/Brands/ProductList';
 import BrandsList from '@/components/Brands/BrandsList';
+import { getBrands, getSettings } from '@/app/api/api';
+import { language } from '@/lib/language';
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: Language }> }): Promise<Metadata> {
 	const { locale } = await params;
-	const lang = locale === Language.UK ? LanguageCode.UA : Language.RU;
-
-	const response = await fetch(`${process.env.SERVER_URL}/baseData/settings`)
-		.then((res) => res.json());
+	const lang = language(locale);
+	const settings = await getSettings();
 
 	return {
-		title: `${response[lang].meta_title} | ${response[lang].config_name}`,
-		description: `${response[lang].meta_title} | ${response[lang].config_name}`,
+		title: `${settings[lang].meta_title} | ${settings[lang].config_name}`,
+		description: `${settings[lang].meta_title} | ${settings[lang].config_name}`,
 	}
 }
 
-async function getBrands(id: string): Promise<BrandsObject | BrandsObjectItems> {
-	const res = await fetch(`${process.env.SERVER_URL}/api/catalog-map/${id}`, {
-		method: 'GET',
-		headers: {
-			'Access-Control-Allow-Credentials': 'true',
-		}
-	});
-	return await res.json();
-}
-
-export default async function Brands({ params }: { params: Promise<{ locale: Language, section: string, slug: string[] }> }) {
-	const { locale, section, slug } = await params;
+export default async function Brands({ params }: { params: Promise<{ section: string, slug: string[] }> }) {
+	const { section, slug } = await params;
 	const brands = await getBrands( slug ? `${section}/${slug[0]}` : section);
 	const title = `manufacturers ${ section }`;
 
 	const path = [
 		{
 			title: 'brands',
-			href: `/${locale}/catalog-map`,
+			href: '/catalog-map',
 			translations: true
 		},
 		{
 			title: title,
-			href: `/${locale}/catalog-map/${section}`,
+			href: `/catalog-map/${section}`,
 			translations: true
 		}
 	];

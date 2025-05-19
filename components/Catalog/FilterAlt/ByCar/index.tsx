@@ -35,7 +35,7 @@ const ByCar: FC<Props> = ({ data, slug, section}  ) => {
 	useEffect(() => {
 		if(slug) {
 			const numbers = slug[0].split('-').filter(part => /^\d+$/.test(part)).map(Number);
-			setFilter({ brand: numbers[1], model: numbers[2], modification: numbers[3], year: numbers[0] });
+			setFilter({ brand: numbers[numbers.length > 2 ? 1 : 0], model: numbers[2], modification: numbers[3], year: numbers[0] });
 		}
 	}, [slug]);
 

@@ -18,7 +18,9 @@ interface NpDocumentPriceProps {
 
 const NpDocumentPrice: FC<NpDocumentPriceProps> = ({ offer_id, quantity, price }) => {
 	const { city } = useAppSelector(state => state.orderReducer);
-	const { data, isLoading } = baseDataAPI.useFetchNpDocumentPriceQuery({ offer_id, ref: city.value, count: quantity });
+	const dlCity = baseDataAPI.useFetchDlSearchQuery(city.label)
+	const { data, isLoading } = baseDataAPI.useFetchDlWarehousesQuery((dlCity && dlCity.data?.length) ? dlCity?.data?.[0].id : '');
+	const { data: calculateData } = baseDataAPI.useFetchDlCalculateQuery({ offer_id, ref: data ? data[0].CityId : 0, count: quantity });
 	const t = useTranslations('Delivery');
 	const totalPrice = price * quantity;
 	const num = (e: number) => {

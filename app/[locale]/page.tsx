@@ -6,28 +6,7 @@ import Title from '@/components/UI/Title';
 import NoResult from '@/components/UI/NoResult';
 import ProductList from '@/components/ProductList';
 import Support from '@/components/Home/Support';
-
-async function getSettings() {
-	const res = await fetch(`${ process.env.NEXT_PUBLIC_API_URL }/baseData/settings`, {
-		method: 'GET',
-		headers: {
-			'Access-Control-Allow-Credentials': 'true',
-		}
-	});
-	return await res.json();
-}
-
-async function getProducts() {
-	const res = await fetch(`${ process.env.NEXT_PUBLIC_API_URL }/api/getProducts?typeproduct=1`, {
-		method: 'POST',
-		headers: {
-			'Access-Control-Allow-Credentials': 'true',
-			'content-type': 'application/json',
-		},
-		body: JSON.stringify({ start: 0, length: 8 }),
-	});
-	return await res.json();
-}
+import { getProducts, getSettings } from '@/app/api/api';
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: Language }> }): Promise<Metadata> {
 	const { locale } = await params;
@@ -45,7 +24,7 @@ export default async function Home({ params }: { params: Promise<{ locale: Langu
 	const locale = (await params).locale;
 	const lang = locale === Language.UK ? LanguageCode.UA : Language.RU;
 	const response = await getSettings();
-	const products = await getProducts();
+	const products = await getProducts('?typeproduct=1', 0, 8);
 
 	return (
 		<>

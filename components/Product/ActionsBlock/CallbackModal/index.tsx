@@ -36,11 +36,12 @@ const CallbackModal: FC<Props> = ({ id, quantity }) => {
 			await createCallback({
 				phone: formatPhoneNumber(phone),
 				product_id: id?.toString(),
-				quantity,
+				quantity: quantity.toString(),
 			}).then((response: { data?: { result: boolean }; error?: FetchBaseQueryError | SerializedError }) => {
 				if(response?.data?.result) {
 					addToast({
-						title: t('our manager'),
+						title: t('sent message'),
+						description: t('our manager'),
 					});
 					onClose();
 				} else if(response.error) {

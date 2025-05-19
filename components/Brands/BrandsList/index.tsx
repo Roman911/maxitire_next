@@ -16,9 +16,8 @@ const BrandsList: FC<Props> = ({ brands, section }) => {
 				if(section === Section.Car) {
 					return <Link
 						key={ i }
-						// onClick={ () => handleClick(brand.id) }
 						className='block text-base hover:text-primary hover:underline'
-						href={ `/catalog/tires` }
+						href={ `/selection-by-car/tires/${brand.name.split(' ').join('-').toLowerCase()}-${brand.id}` }
 					>
 						{ brand.name }
 					</Link>

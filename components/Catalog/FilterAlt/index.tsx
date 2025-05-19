@@ -31,7 +31,6 @@ const FilterAlt: FC<Props> = ({ filterData, section, locale, slug }) => {
 	const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
 	const onChange = (name: string, value: number | string | undefined | null, element: HTMLElement) => {
-		console.log('onChange', name, value, element);
 		if(name === 'brand') {
 			dispatch(setParams({ model_id: null }));
 		}
@@ -42,7 +41,7 @@ const FilterAlt: FC<Props> = ({ filterData, section, locale, slug }) => {
 	return (
 		<div>
 			<FilterBtn openFilter={ onOpen } title={ t('filters') }/>
-			<div className='hidden lg:block bg-white'>
+			<div className='hidden lg:block bg-white max-w-72'>
 				<div
 					className='relative pb-32 lg:pb-4 px-4 pt-4 bg-white border border-gray-200 z-10 overflow-y-auto lg:overflow-y-visible'>
 					<SubmitFloat element={ element } btnTitle={ t('to apply') } setElement={ setElement } offset={ Section.Battery ? 354 : 360 }/>

@@ -14,7 +14,8 @@
     "send": "Надіслати",
     "your comment": "Ваш коментар",
     "enter valid email": "Введіть правильний email",
-    "this field is required": "Це поле обовʼязкове"
+    "this field is required": "Це поле обовʼязкове",
+    "sent message": "Повідомлення надіслано"
   },
   "CarType": {
     "buses": "Буси",
@@ -43,7 +44,9 @@
     "name": "Ім'я",
     "rating": "Оцінка",
     "enter your name": "Введіть ваше ім'я",
-    "enter your comment": "Введіть свій коментар"
+    "enter your comment": "Введіть свій коментар",
+    "sent comment": "Дякуємо за відгук",
+    "your comment sent": "Ваш відгук успішно надіслано"
   },
   "Delivery": {
     "cost": "Вартість",
@@ -240,7 +243,8 @@
     "send": "Надіслати",
     "disks by size": "Диски за розміром",
     "tires by size": "Шини за розміром",
-    "selection tires and disks": "Підбір шин та дисків по авто"
+    "selection tires and disks": "Підбір шин та дисків по авто",
+    "agricultural and special equipment": "Сільхоз та спецтехніка"
   },
   "QuickOrder": {
     "quick order": "Швидке замовлення",

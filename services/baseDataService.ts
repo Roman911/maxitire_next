@@ -13,6 +13,8 @@ import { SettingsProps } from '@/models/settings';
 import { ProductsProps } from '@/models/products';
 import { BaseDataProps, CarModelProps, KitDiskSize, KitTyreSize, ManufModels } from '@/models/baseData';
 import { OrdersParamProps } from '@/models/ordersParam';
+import { ProductProps } from '@/models/product';
+import { AkumProps } from '@/models/akumData';
 
 export const baseDataAPI = createApi({
 	reducerPath: 'baseDataAPI',
@@ -37,6 +39,17 @@ export const baseDataAPI = createApi({
 				url: productEndpoints.products(id),
 				method: API_CONSTANTS.METHODS.POST,
 				body: { start, length }
+			}),
+		}),
+		fetchProduct: build.query<ProductProps, string>({
+			query: (section) => ({
+				url: productEndpoints.product(section),
+			}),
+			providesTags: () => ['Product']
+		}),
+		fetchDataAkum: build.query<AkumProps, string>({
+			query: () => ({
+				url: productEndpoints.dataAkum,
 			}),
 		}),
 		createOrder: build.mutation({
@@ -69,13 +82,13 @@ export const baseDataAPI = createApi({
 			}),
 		}),
 		fetchKitDiskSize: build.query<KitDiskSize[], string>({
-			query: ([section]) => ({
-				url: baseEndpoints.kitDiskSize(section),
+			query: (id) => ({
+				url: baseEndpoints.kitDiskSize(id),
 			}),
 		}),
 		fetchManufModels: build.query<ManufModels[], string>({
-			query: ([section]) => ({
-				url: baseEndpoints.manufModels(section),
+			query: (id) => ({
+				url: baseEndpoints.manufModels(id),
 			}),
 		}),
 		fetchOrdersParam: build.query<OrdersParamProps, string>({
@@ -136,6 +149,13 @@ export const baseDataAPI = createApi({
 		fetchDlWarehouses: build.query({
 			query: (ref) => ({
 				url: deliveryEndpoints.delivery.warehouses(ref),
+			}),
+		}),
+		fetchDlCalculate: build.query({
+			query: (params) => ({
+				url: deliveryEndpoints.delivery.calculate(),
+				method: API_CONSTANTS.METHODS.POST,
+				body: JSON.stringify(params),
 			}),
 		}),
 	}),

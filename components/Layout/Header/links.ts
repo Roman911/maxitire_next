@@ -1,13 +1,5 @@
 export const links = [
 	{
-		title: 'selection by car',
-		url: '/selection-by-car/tires',
-	},
-	{
-		title: 'tire calculator',
-		url: '/tyre-disk-size-calc',
-	},
-	{
 		title: 'brands',
 		url: '/catalog-map',
 	},
@@ -18,5 +10,13 @@ export const links = [
 	{
 		title: 'about us',
 		url: '/about-us',
+	},
+	{
+		title: 'agricultural and special equipment',
+		url: '/catalog/tires/vt-9',
+	},
+	{
+		title: 'tire repair',
+		url: '/page/remont-shin',
 	},
 ];

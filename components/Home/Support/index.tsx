@@ -76,12 +76,12 @@ const Support = () => {
 								type='text'
 								variant='underlined'
 								classNames={ {
-									input: 'group-data-[has-value=true]:text-white text-lg',
+									input: twMerge('input group-data-[has-value=true]:text-white text-lg', styles.input),
 									label: 'text-white text-base',
 									inputWrapper: 'after:bg-white shadow-white group-data-[focus=true]:after:bg-white',
 								} }
 							/>
-							<PhoneMaskInput phoneErrorMessage={ phoneErrorMessage } isDark={ true } />
+							<PhoneMaskInput phoneErrorMessage={ phoneErrorMessage } isDark={ true } inputClass={ styles.input } />
 							<Button isLoading={ loadingBtn } type='submit' size='lg' className='mt-8 w-full'>
 								{ t('send') }
 							</Button>

@@ -66,67 +66,70 @@ export const brandsLinks = [
 export const carBrandsLinks = [
 	{
 		label: 'Audi',
-		href: '/catalog/disks',
-		brand: 4,
+		href: '/selection-by-car/disks/car-audi-4'
 	},
 	{
 		label: 'BMW',
-		href: '/catalog/disks',
-		brand: 11,
+		href: '/selection-by-car/disks/car-bmw-11'
 	},
 	{
 		label: 'Chevrolet',
-		href: '/catalog/disks',
-		brand: 20,
+		href: '/selection-by-car/disks/car-chevrolet-20',
 	},
 	{
 		label: 'Citroen',
-		href: '/catalog/disks',
-		brand: 22,
+		href: '/selection-by-car/disks/car-citroen-22'
 	},
 	{
 		label: 'Ford',
-		href: '/catalog/disks',
-		brand: 44,
+		href: '/selection-by-car/disks/car-ford-44'
 	},
 	{
 		label: 'Honda',
-		href: '/catalog/disks',
-		brand: 57,
+		href: '/selection-by-car/disks/car-honda-57'
 	},
 	{
 		label: 'Hyundai',
-		href: '/catalog/disks',
-		brand: 59,
+		href: '/selection-by-car/disks/car-hyundai-59'
 	},
 	{
 		label: 'Kia',
-		href: '/catalog/disks',
-		brand: 69,
+		href: '/selection-by-car/disks/car-kia-69'
 	},
 	{
 		label: 'Lexus',
-		href: '/catalog/disks',
-		brand: 75,
+		href: '/selection-by-car/disks/car-lexus-75'
 	},
 	{
 		label: 'Mazda',
-		href: '/catalog/disks',
-		brand: 83,
+		href: '/selection-by-car/disks/car-mazda-83'
 	},
 	{
 		label: 'Mercedes',
-		href: '/catalog/disks',
-		brand: 85,
+		href: '/selection-by-car/disks/car-mercedes-85'
 	},
 	{
 		label: 'Mitsubishi',
-		href: '/catalog/disks',
-		brand: 89,
+		href: '/selection-by-car/disks/car-mitsubishi-89'
 	},
 ];
 
 export const diameterLinks = [
+	{
+		label: 'R13',
+		href: '/catalog/disks/d-13',
+		border: true
+	},
+	{
+		label: 'R14',
+		href: '/catalog/disks/d-14',
+		border: true
+	},
+	{
+		label: 'R15',
+		href: '/catalog/disks/d-15',
+		border: true
+	},
 	{
 		label: 'R16',
 		href: '/catalog/disks/d-16',

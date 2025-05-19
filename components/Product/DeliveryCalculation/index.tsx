@@ -9,6 +9,7 @@ import { useAppSelector } from '@/hooks/redux';
 import { NpCitySearch } from '@/components/UI/NpCitySearch';
 import Quantity from '@/components/UI/Quantity';
 import NpDocumentPrice from '@/components/UI/NpDocumentPrice';
+import DlDocumentPrice from '@/components/UI/DlDocumentPrice';
 
 interface Props {
 	offer_id?: number
@@ -19,6 +20,7 @@ interface Props {
 
 const DeliveryCalculation: FC<Props> = ({ offer_id, quantity, price, setQuantity }) => {
 	const { isOpen, onOpen, onOpenChange } = useDisclosure();
+	const [ operator, setOperator ] = useState<string>('nova-poshta');
 	const { city } = useAppSelector(state => state.orderReducer);
 	const [ showDescription, setShowDescription ] = useState<boolean>(false);
 	const t = useTranslations('Delivery calculation');
@@ -43,21 +45,42 @@ const DeliveryCalculation: FC<Props> = ({ offer_id, quantity, price, setQuantity
 		setShowDescription(false);
 	}
 
+	const handleClickOpen = (id: string) => {
+		onOpen();
+		setOperator(id);
+	}
+
 	return (
 		<>
-			<Button
-				onPress={ onOpen }
-				className='delivery-calculation bg-white mt-6 text-sm font-medium border rounded-full border-black w-full lg:w-72 hover:bg-white hover:shadow'
-			>
-				<Image width={ 48 } height={ 32 } className='mr-2.5' src='/icons/truck.svg' alt=""/>
-				{ t('delivery calculation') }
-			</Button>
+			<div className='delivery-calculation flex items-center gap-2 mt-6'>
+				<p className='text-sm font-medium'>Розрахувати доставку</p>
+				<Button
+					isIconOnly={ true }
+					onPress={ () => handleClickOpen('nova-poshta') }
+					radius='sm'
+					variant='bordered'
+					aria-label={ t('delivery calculation') }
+					className='bg-white hover:bg-white hover:shadow'
+				>
+					<Image width={ 30 } height={ 30 } src='/images/nova-poshta-logo.png' alt=""/>
+				</Button>
+				<Button
+					isIconOnly={ true }
+					onPress={ () => handleClickOpen('delivery') }
+					radius='sm'
+					variant='bordered'
+					aria-label={ t('delivery calculation') }
+					className='bg-white hover:bg-white hover:shadow'
+				>
+					<Image width={ 27 } height={ 30 } src='/images/delivery-logo.png' alt=""/>
+				</Button>
+			</div>
 			<Modal isOpen={ isOpen } onOpenChange={ onOpenChange } placement='top'>
 				<ModalContent>
 					{ (onClose) => (
 						<>
 							<ModalHeader className="flex items-center gap-2">
-								<Image width={ 18 } height={ 18 } src='/images/nova-poshta-logo-white-bg.png' alt=""/>
+								<Image width={ 18 } height={ 18 } src={ `/images/${operator}-logo.png` } alt=""/>
 								<h3 className="text-base font-semibold leading-6 text-gray-900">
 									{ t('delivery calculation') }
 								</h3>
@@ -81,7 +104,7 @@ const DeliveryCalculation: FC<Props> = ({ offer_id, quantity, price, setQuantity
 												setQuantity={ onSetQuantity }
 											/>
 										</> }
-										{ showDescription && city.value.length > 0 && <NpDocumentPrice offer_id={ offer_id } quantity={ quantity } price={ price } /> }
+										{ showDescription && city.value.length > 0 ? operator === 'nova-poshta' ? <NpDocumentPrice offer_id={ offer_id } quantity={ quantity } price={ price } /> : <DlDocumentPrice offer_id={ offer_id } quantity={ quantity } price={ price } /> : null }
 									</div>
 								</div>
 							</ModalBody>
