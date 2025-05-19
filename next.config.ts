@@ -26,7 +26,7 @@ const nextConfig: NextConfig = {
 				pathname: '/api/public/img/car2/**',
 			},
 			{
-				protocol: 'http',
+				protocol: 'https',
 				hostname: 'admin.maxitire.com.ua',
 				pathname: '**',
 			},

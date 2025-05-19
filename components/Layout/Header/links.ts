@@ -9,7 +9,7 @@ export const links = [
 	},
 	{
 		title: 'about us',
-		url: '/about-us',
+		url: '/page/about-us',
 	},
 	{
 		title: 'agricultural and special equipment',

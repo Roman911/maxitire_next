@@ -11,6 +11,7 @@ import { typeCatLinks } from './links';
 
 interface TypeCarLinksProps {
 	section: 'header' | 'catalog'
+	onClick?: () => void
 	setOpen?: Dispatch<SetStateAction<boolean>>
 }
 
@@ -27,6 +28,7 @@ interface ILinkComponent extends LinkProps {
 	label: string
 	section: 'header' | 'catalog'
 	icon: keyof typeof Icons
+	onClick?: () => void
 }
 
 const LinkComponent: FC<ILinkComponent> = (
@@ -35,18 +37,20 @@ const LinkComponent: FC<ILinkComponent> = (
 		href,
 		icon,
 		label,
+		onClick
 	}) => {
 	const IconComponent = Icons[icon];
 	const dispatch = useAppDispatch();
 
 	const handleClick = () => {
+		onClick && onClick();
 		dispatch(resetFilter());
 		dispatch(setParams({ 'vehicle_type': null }));
 	}
 
 	return <Link
-		href={ href }
 		onClick={ handleClick }
+		href={ href }
 		className={ twMerge('flex items-center group/item',
 			section === 'catalog' && 'flex-col', section === 'header' && 'mt-3 gap-2.5'
 		) }
@@ -68,22 +72,18 @@ const LinkComponent: FC<ILinkComponent> = (
 	</Link>
 }
 
-const TypeCarLinks: FC<TypeCarLinksProps> = ({ setOpen, section }) => {
+const TypeCarLinks: FC<TypeCarLinksProps> = ({ section, onClick }) => {
 	const t = useTranslations('CarType');
-
-	const handleClick = () => {
-		if(setOpen) setOpen(false);
-	}
 
 	return <>
 		{ typeCatLinks.map(item => {
 			return <LinkComponent
 				key={ item.label }
+				onClick={ onClick }
 				section={ section }
 				href={ item.href }
 				icon={ item.icon as keyof typeof Icons }
 				label={ t(item.label) }
-				onClick={ handleClick }
 			/>
 		}) }
 	</>
