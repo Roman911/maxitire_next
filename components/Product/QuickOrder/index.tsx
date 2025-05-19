@@ -2,7 +2,9 @@
 import { FC, FormEvent, useState } from 'react';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { SerializedError } from '@reduxjs/toolkit';
-import { Button } from '@heroui/button';
+import { addToast } from '@heroui/toast';
+import { Button } from '@heroui/react';
+import MyButton from '@/components/UI/Button';
 import { Form } from '@heroui/form';
 import { Modal, ModalBody, ModalContent, ModalHeader, useDisclosure } from '@heroui/modal';
 import { useTranslations } from 'next-intl';
@@ -71,6 +73,11 @@ const QuickOrder: FC<Props> = (
 			}) => {
 				const data = response?.data;
 				if(data) {
+					addToast({
+						title: t('sent order'),
+						description: t('our manager'),
+						classNames: { base: 'text-black dark:text-gray-50', title: 'text-black dark:text-gray-50' },
+					});
 					if(data?.linkpay?.length > 0) {
 						window.open(data?.linkpay, "_blank")
 					}
@@ -114,10 +121,10 @@ const QuickOrder: FC<Props> = (
 									onSubmit={ onSubmit }
 								>
 									<PhoneMaskInput phoneErrorMessage={ phoneErrorMessage } />
-									<Button type='submit' color='primary' radius='full' size='lg' className='uppercase ml-auto mt-2 font-bold'
+									<MyButton type='submit' size='lg' className='ml-auto mt-2'
 													isLoading={ isLoading }>
 										{ t('send') }
-									</Button>
+									</MyButton>
 								</Form>
 							</ModalBody>
 						</>

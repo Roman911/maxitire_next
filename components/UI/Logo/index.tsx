@@ -26,7 +26,7 @@ const Logo: FC<Props> = ({ isFooter }) => {
 				height={ 134 }
 				priority
 			/> : <Image
-				src='/logo.png'
+				src='/logo.svg'
 				alt="logo"
 				width={ 168 }
 				height={ 113 }

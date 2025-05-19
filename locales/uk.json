@@ -244,12 +244,15 @@
     "disks by size": "Диски за розміром",
     "tires by size": "Шини за розміром",
     "selection tires and disks": "Підбір шин та дисків по авто",
-    "agricultural and special equipment": "Сільхоз та спецтехніка"
+    "agricultural and special equipment": "Сільхоз та спецтехніка",
+    "ask send": "Ваше питання успішно надіслано"
   },
   "QuickOrder": {
     "quick order": "Швидке замовлення",
     "quick order text": "Економте Ваш час, просто залиште телефон і менеджер з Вами зв'яжеться для уточнення всіх деталей",
-    "send": "Надіслати"
+    "send": "Надіслати",
+    "sent order": "Замовлення надіслано",
+    "our manager": "Наш менеджер зателефонує Вам"
   },
   "Search": {
     "search": "Пошук"

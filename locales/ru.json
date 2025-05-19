@@ -243,12 +243,15 @@
     "disks by size": "Диски по размеру",
     "tires by size": "Шины по размеру",
     "selection tires and disks": "Подбор шин и дисков по авто",
-    "agricultural and special equipment": "Сельхоз и спецтехника"
+    "agricultural and special equipment": "Сельхоз и спецтехника",
+    "ask send": "Ваш вопрос успешно отправлен"
   },
   "QuickOrder": {
     "quick order": "Быстрый заказ",
     "quick order text": "Экономьте Ваше время, просто оставьте телефон и менеджер с Вами свяжется для уточнения всех деталей",
-    "send": "Отправить"
+    "send": "Отправить",
+    "sent order": "Заказ отправлен",
+    "our manager": "Наш менеджер позвонит Вам"
   },
   "Search": {
     "search": "Поиск"
