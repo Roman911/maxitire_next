@@ -1,7 +1,6 @@
 'use client';
 import { FC } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
-import { twMerge } from 'tailwind-merge';
 import { BreadcrumbItem, Breadcrumbs } from '@heroui/breadcrumbs';
 import * as Icons from '@/components/UI/Icons';
 
