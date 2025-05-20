@@ -23,12 +23,14 @@
 	}
 }
 
-.image-gallery-icon.image-gallery-fullscreen-button {
-  display: contents;
+.image-gallery-content:not(.fullscreen) {
+  .image-gallery-icon.image-gallery-fullscreen-button {
+    display: contents;
 
-  &::after {
-    content: '';
-    inset: 0;
-    position: absolute;
+    &::after {
+      content: '';
+      inset: 0;
+      position: absolute;
+    }
   }
 }
