@@ -83,7 +83,7 @@ const FilterActive: FC<FilterActiveProps> = ({ locale, className, slug }) => {
 						// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 						// @ts-expect-error
 						const brand = data.brand_disc.find(i => i.value === +searchParams[item as keyof IFilter]);
-						return renderItem(item as keyof IFilter, t(brand ? brand.label : '') || null);
+						return renderItem(item as keyof IFilter, brand?.label || null);
 					} else if(data?.brand) {
 						// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 						// @ts-expect-error

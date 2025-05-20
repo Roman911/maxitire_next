@@ -1,3 +1,5 @@
+'use client';
+import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/routing';
 import CarTireFilter from './CarTireFilter';
@@ -6,9 +8,18 @@ import * as Icons from '@/components/UI/Icons';
 import { Button } from '@heroui/button';
 import { links } from '../links';
 import { Section } from '@/models/section';
+import { twMerge } from 'tailwind-merge';
 
 const Navbar = () => {
+	const [reset, setReset] = useState(false);
 	const t = useTranslations('Main');
+
+	const handleClick = () => {
+		setReset(true);
+		setTimeout(() => {
+			setReset(false);
+		}, 100)
+	}
 
 	const ButtonMeu = ({ sectionItem, label }: { sectionItem: string, label: string }) => (
 		<div className='group'>
@@ -26,10 +37,10 @@ const Navbar = () => {
 				{ label }
 			</Button>
 			<div
-				className='absolute container left-1/2 top-14 z-30 w-full -translate-x-1/2 px-4 hidden group group-hover:flex'>
+				className={twMerge('absolute container left-1/2 top-14 z-30 w-full -translate-x-1/2 px-4 hidden group group-hover:flex', reset && 'hidden')}>
 				<div
 					className='w-full flex-auto overflow-hidden bg-white shadow-lg ring-1 ring-gray-900/5 py-8 px-12 grid grid-cols-4'>
-					{ sectionItem === Section.Tires ? <CarTireFilter /> : <CarDiskFilter /> }
+					{ sectionItem === Section.Tires ? <CarTireFilter onClick={ handleClick } /> : <CarDiskFilter onClick={ handleClick } /> }
 				</div>
 			</div>
 		</div>

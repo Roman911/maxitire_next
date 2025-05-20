@@ -1,12 +1,13 @@
 import { Section } from '@/models/filter';
 import Breadcrumbs from '@/components/UI/Breadcrumbs';
 import ProductComponent from '@/components/Product';
-import { Language, LanguageCode } from '@/models/language';
+import { Language } from '@/models/language';
 import LayoutWrapper from '@/components/Layout/LayoutWrapper';
 import TextSeo from '@/components/UI/TextSeo';
 import type { Metadata } from 'next';
 import SimilarProducts from '@/components/SimilarProducts';
 import { getProduct, getSettings } from '@/app/api/api';
+import { language } from '@/lib/language';
 
 export async function generateMetadata({ params }: { params: Promise<{ product: string }> }): Promise<Metadata> {
 	const { product } = await params;
@@ -22,13 +23,12 @@ export async function generateMetadata({ params }: { params: Promise<{ product: 
 
 export default async function Product({ params }: { params: Promise<{ locale: Language, product: string }> }) {
 	const { locale, product } = await params;
-	const lang = locale === Language.UK ? LanguageCode.UA : Language.RU;
+	const lang = language(locale);
 	const match = product.match(/(\d+)$/); // match will be RegExpMatchArray | null
 	const idProduct = match ? match[1] : '';
 	const productResponse = await getProduct(idProduct);
 	const settings = await getSettings();
 	const section =  /\bdia\d+\b/.test(product) ? Section.Disks : /(?:^|[^a-zA-Z])\d+ah(?=-|$)/.test(product) ? Section.Battery : Section.Tires;
-
 	const path = [
 		{
 			title: section,
@@ -52,7 +52,7 @@ export default async function Product({ params }: { params: Promise<{ locale: La
 				section={ section }
 				settings={ settings }
 			/>
-			<SimilarProducts offerGroup={ productResponse.data.offer_group } />
+			{ section !== Section.Battery && <SimilarProducts offerGroup={ productResponse.data.offer_group } section={ section } /> }
 			<TextSeo description={ settings[lang].description }/>
 		</LayoutWrapper>
 	)
